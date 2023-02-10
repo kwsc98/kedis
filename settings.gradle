@@ -1,0 +1,5 @@
+rootProject.name = 'kedis'
+include ':kedis-core'
+include ':kedis-example'
+include ':kedis-spring-boot'
+findProject(':kedis-spring-boot').setName('spring-boot-starter-kedis')

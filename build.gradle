@@ -1,0 +1,47 @@
+plugins {
+    id 'java-library'
+    id 'org.springframework.boot' version '2.7.2'
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/spring/' }
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+subprojects {
+    group = 'pres.kedis'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '8'
+    apply plugin: 'java-library'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencies {
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'ch.qos.logback:logback-classic'
+        implementation 'org.slf4j:log4j-over-slf4j'
+        implementation 'org.apache.commons:commons-lang3:3.12.0'
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+        implementation 'commons-io:commons-io:2.11.0'
+        implementation 'org.apache.commons:commons-pool2:2.11.1'
+        implementation 'com.github.ben-manes.caffeine:caffeine:2.9.3'
+    }
+}
+
+

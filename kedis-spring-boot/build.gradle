@@ -1,0 +1,4 @@
+dependencies {
+    api project(':kedis-core')
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}
