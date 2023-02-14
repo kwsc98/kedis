@@ -6,7 +6,6 @@ import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.Promise;
 import lombok.extern.slf4j.Slf4j;
-import pers.kedis.core.exception.NettyHttpClientException;
 
 import java.util.Objects;
 

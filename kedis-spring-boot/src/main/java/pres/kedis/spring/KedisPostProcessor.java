@@ -4,7 +4,6 @@ package pres.kedis.spring;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.lang.Nullable;
-import pers.kedis.core.KedisApplicationContext;
 import pers.kedis.core.handler.ComponentHandler;
 import pers.kedis.core.handler.HandlerService;
 

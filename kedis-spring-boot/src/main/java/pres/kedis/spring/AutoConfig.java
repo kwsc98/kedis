@@ -10,7 +10,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import pers.kedis.core.KedisApplicationContext;
 import pers.kedis.core.KedisBuilderFactory;
 import pers.kedis.core.registry.RegistryBuilderFactory;
 import pers.kedis.core.registry.RegistryClientInfo;
