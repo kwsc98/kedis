@@ -1,4 +1,4 @@
-package pers.kedis.core.codec.resp.impl;
+package pers.kedis.core.codec.resp.impl.decode;
 
 /**
  * @author kwsc98

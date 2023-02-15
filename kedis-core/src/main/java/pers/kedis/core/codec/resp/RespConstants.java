@@ -25,23 +25,5 @@ public class RespConstants {
     public static final byte LF = (byte) '\n';
     public static final byte[] CRLF = "\r\n".getBytes(ASCII);
 
-    public enum ReplyType {
-        /**
-         * SIMPLE_STRING
-         * ERROR
-         * INTEGER
-         * BULK_STRING
-         * RESP_ARRAY
-         */
-        SIMPLE_STRING,
-
-        ERROR,
-
-        INTEGER,
-
-        BULK_STRING,
-
-        RESP_ARRAY
-    }
 
 }

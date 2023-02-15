@@ -1,8 +1,7 @@
-package pers.kedis.core.codec.resp.impl;
+package pers.kedis.core.codec.resp.impl.decode;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import pers.kedis.core.codec.resp.AbstractRespDecoder;
 import pers.kedis.core.codec.resp.RespConstants;
 
 /**
@@ -30,6 +29,7 @@ public class RespIntegerDecoder extends AbstractRespDecoder<Long> {
         if (negative) {
             res = -res;
         }
+        buffer.readerIndex(endIndex + 2);
         return res;
     }
 
