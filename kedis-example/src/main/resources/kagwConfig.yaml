@@ -1,0 +1,31 @@
+group:
+  - resourceName: TestResource
+    resourceUrl: /kapi/test
+    timeOut: 3000
+    handlerList:
+      - CommonRequestComponent
+      - CommonResponseComponent
+    routeList:
+      - addres: http://127.0.0.1:8083
+        weight: 1
+      - addres: http://127.0.0.2:8084
+        weight: 0
+    interfaceDTOList:
+      - resourceName: GetTokenInterface
+        resourceUrl: /kapi/test/getToken
+        groupExtends: true
+        handlerList:
+          - TokenBaseComponent:20
+      - resourceName: GetNowTime
+        resourceUrl: /kapi/test/getNowTime
+        routeResourceUrl: /krpc/test/getGetNowTime
+        groupExtends: true
+        handlerList:
+          - CheckTokenComponent
+      - resourceName: GetNowTimeV2
+        resourceUrl: /kapi/test/getNowTimeV2
+        routeResourceUrl: /krpc/test/getGetNowTime
+        groupExtends: true
+        handlerList:
+          - CheckTokenComponent
+          - MockBaseComponent:Mock Data

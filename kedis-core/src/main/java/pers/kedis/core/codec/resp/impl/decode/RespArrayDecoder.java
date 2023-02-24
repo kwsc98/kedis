@@ -2,6 +2,8 @@ package pers.kedis.core.codec.resp.impl.decode;
 
 import io.netty.buffer.ByteBuf;
 import pers.kedis.core.codec.resp.RespConstants;
+import pers.kedis.core.dto.KedisData;
+import pers.kedis.core.dto.DataType;
 import pers.kedis.core.codec.resp.RespUtil;
 
 import java.util.ArrayList;
@@ -10,19 +12,20 @@ import java.util.List;
 /**
  * @author kwsc98
  */
-public class RespArrayDecoder extends AbstractRespDecoder<List<Object>> {
+public class RespArrayDecoder extends AbstractRespDecoder {
 
     @Override
-    public List<Object> decode(ByteBuf buffer) {
-        Long arrayLen = RespUtil.RESP_INTEGER_DECODER.decode(buffer);
+    public KedisData decode(ByteBuf buffer) {
+        KedisData respArray = new KedisData(DataType.RESP_ARRAY);
+        KedisData longKedisData = RespUtil.RESP_INTEGER_DECODER.decode(buffer);
+        Long arrayLen = (Long) longKedisData.getData();
         if (RespConstants.NEGATIVE_ONE.equals(arrayLen)) {
-            return null;
+            return respArray;
         }
-        List<Object> list = new ArrayList<>();
+        List<KedisData> list = new ArrayList<>();
         for (int i = 0; i < arrayLen.intValue(); i++) {
             list.add(RespUtil.decode(buffer));
         }
-        return list;
-
+        return respArray.setData(list);
     }
 }

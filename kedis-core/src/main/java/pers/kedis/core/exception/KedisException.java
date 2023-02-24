@@ -7,4 +7,14 @@ import java.util.Objects;
  */
 public class KedisException extends RuntimeException {
 
+    public KedisException() {
+    }
+
+    public KedisException(String message) {
+        super(message);
+    }
+
+
+
+
 }

@@ -3,23 +3,22 @@ package pers.kedis.core.codec.resp.impl.encode;
 import com.alibaba.nacos.shaded.com.google.common.base.Charsets;
 import io.netty.buffer.ByteBuf;
 import pers.kedis.core.codec.resp.RespConstants;
-import pers.kedis.core.codec.resp.RespData;
+import pers.kedis.core.common.utils.KedisUtil;
+import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.codec.resp.RespEncoder;
 import pers.kedis.core.codec.resp.RespUtil;
-import pers.kedis.core.codec.resp.impl.decode.AbstractRespDecoder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * @author kwsc98
  */
-public class RespArrayEncoder implements RespEncoder<List<RespData<Object>>> {
+public class RespArrayEncoder implements RespEncoder {
 
     @Override
-    public void encode(RespData<List<RespData<Object>>> respData, ByteBuf byteBuf) {
-        List<RespData<Object>> data = respData.getData();
+    public void encode(KedisData kedisData, ByteBuf byteBuf) {
+        List<KedisData> data = KedisUtil.convertList(kedisData.getData());
         long listLen = -1;
         if (Objects.nonNull(data)) {
             listLen = data.size();
@@ -30,10 +29,9 @@ public class RespArrayEncoder implements RespEncoder<List<RespData<Object>>> {
         if (Objects.isNull(data) || data.size() == 0) {
             return;
         }
-        for (RespData<Object> datum : data) {
+        for (KedisData datum : data) {
             RespUtil.encode(datum, byteBuf);
         }
-        byteBuf.writeBytes(RespConstants.CRLF);
     }
 
 }

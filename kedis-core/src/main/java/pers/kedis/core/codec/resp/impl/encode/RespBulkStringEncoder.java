@@ -3,10 +3,8 @@ package pers.kedis.core.codec.resp.impl.encode;
 import com.alibaba.nacos.shaded.com.google.common.base.Charsets;
 import io.netty.buffer.ByteBuf;
 import pers.kedis.core.codec.resp.RespConstants;
-import pers.kedis.core.codec.resp.RespData;
+import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.codec.resp.RespEncoder;
-import pers.kedis.core.codec.resp.impl.decode.AbstractRespDecoder;
-import pers.kedis.core.exception.KedisException;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
@@ -14,11 +12,11 @@ import java.util.Objects;
 /**
  * @author kwsc98
  */
-public class RespBulkStringEncoder implements RespEncoder<String> {
+public class RespBulkStringEncoder implements RespEncoder {
 
     @Override
-    public void encode(RespData<String> respData, ByteBuf byteBuf) {
-        String data = respData.getData();
+    public void encode(KedisData kedisData, ByteBuf byteBuf) {
+        String data = (String) kedisData.getData();
         long strLen = -1;
         byte[] bytes = null;
         if (Objects.nonNull(data)) {

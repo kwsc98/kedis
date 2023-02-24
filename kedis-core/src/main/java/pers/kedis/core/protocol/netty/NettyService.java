@@ -9,6 +9,11 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
+import pers.kedis.core.KedisService;
+import pers.kedis.core.dto.ChannelDTO;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author kwsc98
@@ -16,12 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NettyService {
 
+    protected static final Map<String, ChannelDTO> CHANNELDTO_MAP = new HashMap<>();
+
     EventLoopGroup bossGroup;
 
     EventLoopGroup workerGroup;
 
-
-    public NettyService(int port) {
+    public NettyService(int port, KedisService kedisService) {
         //NioEventLoopGroup是对Thread和Selector的封装
         //主线程
         bossGroup = new NioEventLoopGroup(1);
@@ -34,7 +40,7 @@ public class NettyService {
                     //绑定服务端通道 NioServerSocketChannel
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new NettyServerInitializer());
+                    .childHandler(new NettyServerInitializer(kedisService));
             Channel channel = b.bind(port).sync().channel();
             log.info("server channel start port:{} channel:{}", port, channel);
         } catch (Exception e) {

@@ -1,9 +1,9 @@
-package pers.kedis.core.codec.resp;
+package pers.kedis.core.dto;
 
 /**
  * @author kwsc98
  */
-public enum RespType {
+public enum DataType {
 
     /**
      * SIMPLE_STRING

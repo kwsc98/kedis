@@ -1,17 +1,19 @@
 package pers.kedis.core.codec.resp.impl.decode;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import pers.kedis.core.codec.resp.RespConstants;
+import pers.kedis.core.codec.resp.RespUtil;
+import pers.kedis.core.dto.KedisData;
+import pers.kedis.core.dto.DataType;
 
 /**
  * @author kwsc98
  */
-public class RespIntegerDecoder extends AbstractRespDecoder<Long> {
+public class RespIntegerDecoder extends AbstractRespDecoder {
 
     @Override
-    public Long decode(ByteBuf buffer) {
-        int endIndex = findEndIndex(buffer);
+    public KedisData decode(ByteBuf buffer) {
+        int endIndex = RespUtil.findEndIndex(buffer);
         long res = 0L;
         int firstIndex = buffer.readerIndex();
         boolean negative = false;
@@ -30,17 +32,7 @@ public class RespIntegerDecoder extends AbstractRespDecoder<Long> {
             res = -res;
         }
         buffer.readerIndex(endIndex + 2);
-        return res;
-    }
-
-    public static void main(String[] args) {
-        RespIntegerDecoder respIntegerDecoder = new RespIntegerDecoder();
-        ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer();
-        // +OK\r\n
-        buffer.writeBytes("13232".getBytes(RespConstants.UTF_8));
-        buffer.writeBytes(RespConstants.CRLF);
-        Long value = respIntegerDecoder.decode(buffer);
-        System.out.println();
+        return new KedisData(DataType.INTEGER).setData(res);
     }
 
 }

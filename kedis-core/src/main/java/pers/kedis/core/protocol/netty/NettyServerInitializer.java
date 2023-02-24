@@ -4,6 +4,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import lombok.extern.slf4j.Slf4j;
+import pers.kedis.core.KedisService;
 
 /**
  * @author kwsc98
@@ -11,21 +12,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
 
+    private final KedisService kedisService;
 
-    public NettyServerInitializer( ){
+    public NettyServerInitializer(KedisService kedisService) {
+        this.kedisService = kedisService;
     }
 
 
     @Override
-    protected void initChannel(SocketChannel ch) throws Exception {
+    protected void initChannel(SocketChannel ch) {
         ChannelPipeline p = ch.pipeline();
-//        // resp编码器，返回结果
-//        p.addLast(new ResponseEncoder());
-//        // 处理客户端的链接和断开，管理客户端
-//        p.addLast(new ClientHandler());
-//        // 命令解析处理器，原始信息转成命令和参数
-//        p.addLast(new CommandDecoder());
-        // Http请求处理
-        p.addLast(new NettyServerHandler());
+        p.addLast(new KedisClientHandler());
+        p.addLast(new KedisEncodeHandler());
+        p.addLast(new KedisDecodeHandler());
+        p.addLast(new NettyServerHandler(kedisService));
     }
 }
