@@ -78,7 +78,7 @@ public class KedisService {
         if (Objects.isNull(REDIS_DB_MAP)) {
             init(kedisConfig.getDbCount());
         }
-        KedisService.kedisConfig = kedisConfig;
+        KedisService.KEDISCONFIG = kedisConfig;
     }
 
 }
