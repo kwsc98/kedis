@@ -1,9 +1,12 @@
 package pers.kedis.core.common.structure;
 
+
+import java.util.Map;
+
 /**
  * @author kwsc98
  */
-public class DictEntry<K, V> {
+public class DictEntry<K, V> implements Map.Entry<K, V> {
 
     K key;
 
@@ -11,14 +14,29 @@ public class DictEntry<K, V> {
 
     DictEntry<K, V> next;
 
-    public DictEntry<K, V> setKey(K key) {
+    DictEntry(K key) {
         this.key = key;
-        return this;
     }
 
-    public DictEntry<K, V> setValue(V value) {
+    @Override
+    public K getKey() {
+        return key;
+    }
+
+    @Override
+    public V getValue() {
+        return value;
+    }
+
+    public DictEntry<K, V> getNext() {
+        return next;
+    }
+
+    @Override
+    public V setValue(V value) {
+        V res = this.value;
         this.value = value;
-        return this;
+        return res;
     }
 
     public DictEntry<K, V> setNext(DictEntry<K, V> next) {

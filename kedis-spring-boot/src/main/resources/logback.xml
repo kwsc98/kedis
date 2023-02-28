@@ -5,7 +5,7 @@
 
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
     <property name="LOG_HOME" value="logs/"/>
-    <property name="FILE_NAME" value="KapiGateway"/>
+    <property name="FILE_NAME" value="Kedis"/>
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{UUID:-Service}] %-5level %logger{36} -- %msg%n"/>
 
     <!-- 控制台输出 -->

@@ -1,8 +1,5 @@
 package pers.kedis.core.common.structure;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,11 +9,11 @@ public class Dictht<K, V> {
 
     DictEntry<K, V>[] dictEntries;
 
-    long size;
+    int size;
 
-    long sizemask;
+    int sizemask;
 
-    long used;
+    int used;
 
     @SuppressWarnings({"unchecked"})
     Dictht(int size) {
@@ -28,14 +25,16 @@ public class Dictht<K, V> {
     }
 
 
-    public void put(K key, V value) {
+    public V put(K key, V value) {
         int hash = hash(key);
         DictEntry<K, V>[] dictEntries = this.dictEntries;
         int index = (dictEntries.length - 1) & hash;
         DictEntry<K, V> dictEntry = dictEntries[index];
+        V res = null;
         if (dictEntry == null) {
             used++;
-            dictEntry = new DictEntry<K, V>().setKey(key).setValue(value);
+            dictEntry = new DictEntry<K, V>(key);
+            dictEntry.setValue(value);
             dictEntries[index] = dictEntry;
         } else {
             while (!Objects.equals(key, dictEntry.key)) {
@@ -45,23 +44,25 @@ public class Dictht<K, V> {
                 dictEntry = dictEntry.next;
             }
             if (Objects.equals(key, dictEntry.key)) {
-                dictEntry.setValue(value);
+                res = dictEntry.setValue(value);
             } else {
                 used++;
-                dictEntry.next = new DictEntry<K, V>().setKey(key).setValue(value);
+                dictEntry.next = new DictEntry<K, V>(key);
+                dictEntry.next.setValue(value);
             }
         }
+        return res;
     }
 
-    public V get(K key) {
+    protected DictEntry<K, V> getDictEntry(Object key) {
         int hash = hash(key);
         DictEntry<K, V>[] dictEntries = this.dictEntries;
         int index = (dictEntries.length - 1) & hash;
         DictEntry<K, V> dictEntry = dictEntries[index];
-        V value = null;
+        DictEntry<K, V> value = null;
         while (dictEntry != null) {
             if (Objects.equals(key, dictEntry.key)) {
-                value = dictEntry.value;
+                value = dictEntry;
                 break;
             }
             dictEntry = dictEntry.next;
@@ -69,7 +70,20 @@ public class Dictht<K, V> {
         return value;
     }
 
-    public V remove(K key) {
+    public V get(K key) {
+        V value = null;
+        DictEntry<K, V> dictEntry = getDictEntry(key);
+        if (dictEntry != null) {
+            value = dictEntry.value;
+        }
+        return value;
+    }
+
+    public boolean containsKey(Object key) {
+        return getDictEntry(key) != null;
+    }
+
+    public V remove(Object key) {
         int hash = hash(key);
         DictEntry<K, V>[] dictEntries = this.dictEntries;
         int index = (dictEntries.length - 1) & hash;
@@ -77,10 +91,12 @@ public class Dictht<K, V> {
         V value = null;
         if (dictEntry == null || Objects.equals(dictEntry.key, key)) {
             if (dictEntry != null) {
+                dictEntries[index] = dictEntry.next;
                 value = dictEntry.value;
                 used--;
+            } else {
+                dictEntries[index] = null;
             }
-            dictEntries[index] = null;
         } else {
             while (dictEntry.next != null && !Objects.equals(key, dictEntry.next.key)) {
                 dictEntry = dictEntry.next;
@@ -88,36 +104,10 @@ public class Dictht<K, V> {
             if (dictEntry.next != null) {
                 used--;
                 value = dictEntry.next.value;
-                dictEntry.next = null;
+                dictEntry.next = dictEntry.next.next;
             }
         }
         return value;
-    }
-
-
-    public static void main(String[] args) {
-        Dictht<String, String> dictht = new Dictht<>(16);
-        dictht.put("1", "1");
-        dictht.put("2", "2");
-        dictht.put("3", "3");
-        dictht.put("4", "4");
-        dictht.put("532323", "5");
-        dictht.put("6", "6");
-        dictht.put("7", "7");
-        dictht.put("8", "8");
-        dictht.put("9", "9");
-        dictht.put("12112", "10");
-        dictht.put("11", "11");
-        String str = dictht.get("1");
-        str = dictht.remove("2");
-        str = dictht.remove("3");
-        str = dictht.remove("4");
-        str = dictht.remove("532323");
-        str = dictht.remove("6");
-        str = dictht.remove("wwewewe");
-
-//        new HashMap<>().put();
-        System.out.println();
     }
 
     static int hash(Object key) {
