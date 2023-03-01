@@ -3,6 +3,7 @@ package pers.kedis.core.common.structure;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import java.util.*;
 
 /**
@@ -103,13 +104,19 @@ public class Dict<K, V> implements Map<K, V> {
 
     @Override
     public V get(Object key) {
+        Map.Entry<K, V> dictEntry = getEntry(key);
+        return dictEntry == null ? null : dictEntry.getValue();
+    }
+
+    public Map.Entry<K, V> getEntry(Object key) {
         doReHash();
         DictEntry<K, V> dictEntry = dicthtArray.get(0).getDictEntry(key);
         if (dictEntry == null && dictIsRehashing()) {
             dictEntry = dicthtArray.get(1).getDictEntry(key);
         }
-        return dictEntry == null ? null : dictEntry.value;
+        return dictEntry;
     }
+
 
     @Nullable
     @Override

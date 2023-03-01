@@ -25,7 +25,7 @@ public class KedisService {
     public static void init(int dbCount) {
         REDIS_DB_MAP = new HashMap<>();
         for (int i = 0; i < dbCount; i++) {
-            REDIS_DB_MAP.put(i, new KedisDb(i));
+            REDIS_DB_MAP.put(i, new KedisDb());
         }
     }
 

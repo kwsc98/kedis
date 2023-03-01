@@ -20,7 +20,6 @@ public class SetCommandImpl extends CommandAbstract {
         List<KedisData> kedisDataList = KedisUtil.convertList(kedisData.getData());
         String key = (String) kedisDataList.get(1).getData();
         KedisData value = kedisDataList.get(2);
-        kedisDb.setKey(key, value);
         return getSuccessKedisData();
     }
 
