@@ -9,7 +9,7 @@ import pers.kedis.core.dto.KedisData;
 public interface Command {
 
     /**
-     * Redis Command Interface
+     * Kedis Command Interface
      */
     KedisData handler(ChannelDTO channelDTO);
 

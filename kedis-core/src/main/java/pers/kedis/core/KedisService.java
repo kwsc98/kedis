@@ -18,19 +18,19 @@ import java.util.*;
 @Slf4j
 public class KedisService {
 
-    private static Map<Integer, KedisDb> REDIS_DB_MAP;
+    private static Map<Integer, KedisDb> KEDIS_DB_MAP;
 
     public static KedisConfig KEDISCONFIG;
 
     public static void init(int dbCount) {
-        REDIS_DB_MAP = new HashMap<>();
+        KEDIS_DB_MAP = new HashMap<>();
         for (int i = 0; i < dbCount; i++) {
-            REDIS_DB_MAP.put(i, new KedisDb());
+            KEDIS_DB_MAP.put(i, new KedisDb());
         }
     }
 
     public static KedisDb getkedisDb(Integer i) {
-        return REDIS_DB_MAP.get(i);
+        return KEDIS_DB_MAP.get(i);
     }
 
 
@@ -70,12 +70,12 @@ public class KedisService {
                 stringBuilder.append(kedisDataPre.getData().toString()).append(" ");
             }
         }
-        log.debug("Recrive Command : {} Channel : {} RedisDb : {}", stringBuilder.toString(), channelDTO.getChannel(), channelDTO.getKedisDb());
+        log.debug("Recrive Command : {} Channel : {} KedisDb : {}", stringBuilder.toString(), channelDTO.getChannel(), channelDTO.getKedisDb());
     }
 
 
     public synchronized static void refresh(KedisConfig kedisConfig) {
-        if (Objects.isNull(REDIS_DB_MAP)) {
+        if (Objects.isNull(KEDIS_DB_MAP)) {
             init(kedisConfig.getDbCount());
         }
         KedisService.KEDISCONFIG = kedisConfig;

@@ -1,17 +1,13 @@
 package pers.kedis.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.internal.NotNull;
 import pers.kedis.core.common.structure.Dict;
-import pers.kedis.core.common.structure.DictEntry;
 import pers.kedis.core.common.structure.DictType;
 import pers.kedis.core.dto.KedisKey;
 import pers.kedis.core.dto.KedisValue;
 import pers.kedis.core.exception.KedisException;
-
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author kwsc98
@@ -29,17 +25,17 @@ public class KedisDb {
         dataTypeMap.put(DictType.SortSet, new Dict<>(1024));
     }
 
-    public KedisValue<?> get(DictType dictType, @NotNull KedisKey key) {
+    public KedisValue<?> get(DictType dictType,  KedisKey key) {
         Map.Entry<KedisKey, KedisValue<?>> entry = getEntry(dictType, key);
         return entry == null ? null : entry.getValue();
     }
 
-    public boolean containsKey(DictType dictType, @NotNull KedisKey key) {
+    public boolean containsKey(DictType dictType,  KedisKey key) {
         Map.Entry<KedisKey, KedisValue<?>> entry = getEntry(dictType, key);
         return entry != null;
     }
 
-    public KedisValue<?> put(DictType dictType, @NotNull KedisKey key, KedisValue<?> value) {
+    public KedisValue<?> put(DictType dictType,  KedisKey key, KedisValue<?> value) {
         Map.Entry<KedisKey, KedisValue<?>> entry = getEntry(dictType, key);
         if (entry == null) {
             if (value == null) {
@@ -62,7 +58,7 @@ public class KedisDb {
         return null;
     }
 
-    private Map.Entry<KedisKey, KedisValue<?>> getEntry(DictType dictType, @NotNull KedisKey key) {
+    private Map.Entry<KedisKey, KedisValue<?>> getEntry(DictType dictType,  KedisKey key) {
         Map.Entry<KedisKey, KedisValue<?>> entry = dataTypeMap.get(dictType).getEntry(key);
         if (entry == null || entry.getKey().getCurrentTimeMillis() == null) {
             return entry;
@@ -73,6 +69,10 @@ public class KedisDb {
             return null;
         }
         return entry;
+    }
+
+    private int getPatternKey( List<KedisKey> res, int index, int count) {
+      return 1;
     }
 
 

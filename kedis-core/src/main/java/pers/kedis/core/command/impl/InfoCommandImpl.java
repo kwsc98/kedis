@@ -16,7 +16,7 @@ public class InfoCommandImpl extends CommandAbstract {
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> res = new ArrayList<>();
-        res.add(new KedisData(DataType.BULK_STRING).setData("redis_version:kedis_1.0.0"));
+        res.add(new KedisData(DataType.BULK_STRING).setData("kedis_version:kedis_1.0.0"));
         res.add(new KedisData(DataType.BULK_STRING).setData("os:" + System.getProperty("os.name")));
         return new KedisData(DataType.RESP_ARRAY).setData(res);
     }

@@ -3,6 +3,8 @@ package pers.kedis.core.common.structure;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import pers.kedis.core.KedisDb;
+import pers.kedis.core.dto.KedisKey;
 
 import java.util.*;
 
@@ -163,6 +165,50 @@ public class Dict<K, V> implements Map<K, V> {
         }
     }
 
+    private int getPatternKey(@NotNull List<K> kedisKeyList, String patternStr, int index) {
+        DictEntry<K, V>[] dictEntries = dicthtArray.get(0).dictEntries;
+        int res = index + 1;
+        if (index >= dictEntries.length) {
+            return 0;
+        }
+        convertKedisKeyList(kedisKeyList, dictEntries[index]);
+        if (!dictIsRehashing()) {
+            return res;
+        }
+        DictEntry<K, V>[] dictEntries2 = dicthtArray.get(1).dictEntries;
+        while (index != res) {
+            convertKedisKeyList(kedisKeyList, dictEntries2[index]);
+            index = getNextIndex(index, dictEntries2.length);
+        }
+        return res;
+    }
+
+
+    private int getNextIndex(int index, int length) {
+        index |= length;
+        index = rev(index);
+        index++;
+        index = rev(index);
+        return index;
+    }
+
+    private int rev(int index) {
+        int rev = 0;
+        for (int i = 0; i < 32 && index != 0; ++i) {
+            rev |= (index & 1) << (31 - i);
+            index >>>= 1;
+        }
+        return rev;
+    }
+
+
+    private void convertKedisKeyList(List<K> kedisKeyList, DictEntry<K, V> entry) {
+        while (entry != null) {
+            kedisKeyList.add(entry.key);
+            entry = entry.next;
+        }
+    }
+
     @Override
     public void clear() {
         init(this.capacity);
@@ -193,6 +239,14 @@ public class Dict<K, V> implements Map<K, V> {
 
 
     public static void main(String[] args) throws InterruptedException {
+        Dict dict = new Dict(2);
+        int index = 0;
+        for (int i = 0; i < 10; i++) {
+            index = dict.getNextIndex(index, 16);
+            System.out.println(index);
+        }
+
+
         Map<String, String> map = new Dict<>(1024);
         List<String> list = new ArrayList<>();
         long start = System.currentTimeMillis();
@@ -203,8 +257,13 @@ public class Dict<K, V> implements Map<K, V> {
         }
         System.out.println(System.currentTimeMillis() - start);
         start = System.currentTimeMillis();
+        int i = 0;
         for (String s : list) {
-            map.get(s);
+            String ans = map.get(s);
+            if (!ans.equals(s)) {
+                throw new RuntimeException();
+            }
+            System.out.println(i++);
         }
         System.out.println(System.currentTimeMillis() - start);
     }
