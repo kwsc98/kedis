@@ -3,8 +3,6 @@ package pers.kedis.core.common.structure;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import pers.kedis.core.KedisDb;
-import pers.kedis.core.dto.KedisKey;
 
 import java.util.*;
 
@@ -167,10 +165,7 @@ public class Dict<K, V> implements Map<K, V> {
 
     private int getPatternKey(@NotNull List<K> kedisKeyList, String patternStr, int index) {
         DictEntry<K, V>[] dictEntries = dicthtArray.get(0).dictEntries;
-        int res = index + 1;
-        if (index >= dictEntries.length) {
-            return 0;
-        }
+        int res = getNextIndex(index,dictEntries.length);
         convertKedisKeyList(kedisKeyList, dictEntries[index]);
         if (!dictIsRehashing()) {
             return res;
@@ -185,7 +180,7 @@ public class Dict<K, V> implements Map<K, V> {
 
 
     private int getNextIndex(int index, int length) {
-        index |= length;
+        index |= ~length + 1;
         index = rev(index);
         index++;
         index = rev(index);
@@ -239,10 +234,10 @@ public class Dict<K, V> implements Map<K, V> {
 
 
     public static void main(String[] args) throws InterruptedException {
-        Dict dict = new Dict(2);
+        Dict dict = new Dict(4);
         int index = 0;
         for (int i = 0; i < 10; i++) {
-            index = dict.getNextIndex(index, 16);
+            index = dict.getNextIndex(index, 8);
             System.out.println(index);
         }
 
