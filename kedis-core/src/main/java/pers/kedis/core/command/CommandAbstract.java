@@ -13,11 +13,11 @@ public abstract class CommandAbstract implements Command {
     }
 
     protected KedisData getSuccessKedisData() {
-        return new KedisData(DataType.INTEGER).setData(1);
+        return new KedisData(DataType.INTEGER).setData(1L);
     }
 
     protected KedisData getErrorKedisData() {
-        return new KedisData(DataType.INTEGER).setData(0);
+        return new KedisData(DataType.INTEGER).setData(0L);
     }
 
 }

@@ -19,8 +19,6 @@ public class RespBulkStringDecoder extends AbstractRespDecoder {
         Long strLen = (Long) longKedisData.getData();
         if (RespConstants.NEGATIVE_ONE.equals(strLen)) {
             return kedisData.setData(RespConstants.NULL_STRING);
-        } else if (RespConstants.ZERO.equals(strLen)) {
-            return kedisData.setData(RespConstants.EMPTY_STRING);
         }
         int endIndex = RespUtil.findEndIndex(buffer);
         int firstIndex = buffer.readerIndex();

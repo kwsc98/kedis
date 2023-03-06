@@ -67,6 +67,7 @@ public class RespUtil {
 
 
     protected static RespDecoder getRespDecoder(byte commandType) {
+        char s = (char) commandType;
         switch (commandType) {
             case RespConstants.PLUS_BYTE:
                 return RESP_SIMPLE_STRING_DECODER;

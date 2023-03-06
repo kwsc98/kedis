@@ -8,6 +8,7 @@ import pers.kedis.core.dto.DataType;
 import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.exception.KedisException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,10 @@ public class ConfigCommandImpl extends CommandAbstract {
         if (!get.equalsIgnoreCase(pre1) || !databases.equals(pre2)) {
             throw new KedisException("Error Command");
         }
-        return new KedisData(DataType.INTEGER).setData(KedisService.KEDISCONFIG.getDbCount());
+        List<KedisData> res = new ArrayList<>();
+        res.add(new KedisData(DataType.BULK_STRING).setData("databases"));
+        res.add(new KedisData(DataType.BULK_STRING).setData(String.valueOf(KedisService.KEDISCONFIG.getDbCount())));
+        return new KedisData(DataType.RESP_ARRAY).setData(res);
     }
 
 

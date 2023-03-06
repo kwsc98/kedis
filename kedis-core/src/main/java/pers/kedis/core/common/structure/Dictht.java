@@ -11,8 +11,6 @@ public class Dictht<K, V> {
 
     int size;
 
-    int sizemask;
-
     int used;
 
     @SuppressWarnings({"unchecked"})
@@ -20,7 +18,6 @@ public class Dictht<K, V> {
         assert size > 1 : "Init size Error";
         this.dictEntries = (DictEntry<K, V>[]) new DictEntry[size];
         this.size = size;
-        this.sizemask = size - 1;
         this.used = 0;
     }
 

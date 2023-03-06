@@ -12,7 +12,6 @@ public enum DictType {
      * Set
      * SortSet
      */
-    Key,
     String,
     Hash,
     List,

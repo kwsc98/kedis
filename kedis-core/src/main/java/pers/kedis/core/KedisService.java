@@ -46,7 +46,9 @@ public class KedisService {
     private KedisData handle(ChannelDTO channelDTO) {
         printRequestCommand(channelDTO);
         try {
-            return CommandService.handler(channelDTO);
+            KedisData kedisData = CommandService.handler(channelDTO);
+            printResponeCommand(kedisData);
+            return kedisData;
         } catch (Exception e) {
             log.error("CommandService Error");
             String info = "Kedis Error";
@@ -71,6 +73,19 @@ public class KedisService {
             }
         }
         log.debug("Recrive Command : {} Channel : {} KedisDb : {}", stringBuilder.toString(), channelDTO.getChannel(), channelDTO.getKedisDb());
+    }
+
+    private void printResponeCommand(KedisData kedisData) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (DataType.RESP_ARRAY == kedisData.getDataType()) {
+            List<KedisData> list = KedisUtil.convertList(kedisData.getData());
+            for (KedisData kedisDataPre : list) {
+                stringBuilder.append(kedisDataPre.getData().toString()).append(" ");
+            }
+        } else {
+            stringBuilder.append(kedisData.getData().toString());
+        }
+        log.debug("Command Response : {} ", stringBuilder.toString());
     }
 
 

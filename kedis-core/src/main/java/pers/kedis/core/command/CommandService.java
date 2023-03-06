@@ -28,7 +28,8 @@ public class CommandService {
         COMMAND_MAP.put(CommandType.QUIT.name().toUpperCase(), new QuitCommandImpl());
         COMMAND_MAP.put(CommandType.INFO.name().toUpperCase(), new InfoCommandImpl());
         COMMAND_MAP.put(CommandType.CONFIG.name().toUpperCase(), new ConfigCommandImpl());
-        COMMAND_MAP.put(CommandType.SCAN.name().toUpperCase(), new ConfigCommandImpl());
+        COMMAND_MAP.put(CommandType.SCAN.name().toUpperCase(), new ScanCommandImpl());
+        COMMAND_MAP.put(CommandType.NSET.name().toUpperCase(), new NsetCommandImpl());
     }
 
     public static KedisData handler(ChannelDTO channelDTO) {
@@ -49,7 +50,7 @@ public class CommandService {
         }
         Command command = COMMAND_MAP.get(commandName.toUpperCase());
         if (Objects.isNull(command)) {
-            throw new KedisException();
+            command = COMMAND_MAP.get(CommandType.PING.name().toUpperCase());
         }
         return command.handler(channelDTO);
     }

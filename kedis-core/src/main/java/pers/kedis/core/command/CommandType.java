@@ -8,6 +8,7 @@ public enum CommandType {
      * SET
      */
     SET,
+    NSET,
     CLIENT,
     PING,
     QUIT,

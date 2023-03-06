@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author kwsc98
@@ -41,7 +42,7 @@ public class Dict<K, V> implements Map<K, V> {
     /**
      * 进行rehash
      */
-    public void doReHash() {
+    private void doReHash() {
         if (!dictExpandIfNeeded()) {
             return;
         }
@@ -163,16 +164,16 @@ public class Dict<K, V> implements Map<K, V> {
         }
     }
 
-    private int getPatternKey(@NotNull List<K> kedisKeyList, String patternStr, int index) {
+    public int getPatternKey(@NotNull List<K> kedisKeyList, String pattern, int index) {
         DictEntry<K, V>[] dictEntries = dicthtArray.get(0).dictEntries;
-        int res = getNextIndex(index,dictEntries.length);
-        convertKedisKeyList(kedisKeyList, dictEntries[index]);
+        int res = getNextIndex(index, dictEntries.length);
+        convertKedisKeyList(kedisKeyList, dictEntries[index], pattern);
         if (!dictIsRehashing()) {
             return res;
         }
         DictEntry<K, V>[] dictEntries2 = dicthtArray.get(1).dictEntries;
         while (index != res) {
-            convertKedisKeyList(kedisKeyList, dictEntries2[index]);
+            convertKedisKeyList(kedisKeyList, dictEntries2[index], pattern);
             index = getNextIndex(index, dictEntries2.length);
         }
         return res;
@@ -197,9 +198,11 @@ public class Dict<K, V> implements Map<K, V> {
     }
 
 
-    private void convertKedisKeyList(List<K> kedisKeyList, DictEntry<K, V> entry) {
+    private void convertKedisKeyList(List<K> kedisKeyList, DictEntry<K, V> entry, String pattern) {
         while (entry != null) {
-            kedisKeyList.add(entry.key);
+            if (Pattern.matches(pattern, entry.key.toString())) {
+                kedisKeyList.add(entry.key);
+            }
             entry = entry.next;
         }
     }

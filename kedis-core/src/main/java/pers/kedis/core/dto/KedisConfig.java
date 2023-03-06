@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class KedisConfig {
 
-    int dbCount = 1;
+    int dbCount = 3;
 
 }

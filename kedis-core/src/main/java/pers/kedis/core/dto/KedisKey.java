@@ -9,6 +9,7 @@ import java.util.Objects;
  */
 public class KedisKey {
 
+    @Getter
     private final String key;
 
     @Getter
@@ -17,6 +18,9 @@ public class KedisKey {
     public KedisKey(String key,Long currentTimeMillis) {
         this.key = key;
         this.currentTimeMillis = null;
+    }
+    public KedisKey(String key) {
+        this.key = key;
     }
 
     public void setCurrentTimeMillis(Long currentTimeMillis) {
