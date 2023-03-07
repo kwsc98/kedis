@@ -26,7 +26,7 @@ public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline p = ch.pipeline();
         p.addLast(new KedisClientHandler());
         p.addLast(new KedisDecodeHandler());
+        p.addLast(new KedisEncodeHandler());
         p.addLast(new NettyServerHandler(kedisService));
-//        p.addLast(new KedisEncodeHandler());
     }
 }

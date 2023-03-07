@@ -29,11 +29,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<List<KedisDa
     protected void channelRead0(ChannelHandlerContext ctx, List<KedisData> kedisDataList) {
         ChannelDTO channelDTO = NettyService.CHANNELDTO_MAP.get(ctx.channel().id().asLongText());
         channelDTO.setKedisDataList(kedisDataList);
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
-        for (KedisData kedisData : kedisService.handles(channelDTO)) {
-            RespUtil.encode(kedisData, byteBuf);
-        }
-        ctx.writeAndFlush(byteBuf);
+        ctx.writeAndFlush(kedisService.handles(channelDTO));
     }
 
     @Override

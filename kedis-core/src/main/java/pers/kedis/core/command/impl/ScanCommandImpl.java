@@ -23,10 +23,10 @@ public class ScanCommandImpl extends CommandAbstract {
         int index = Integer.parseInt(kedisDataList.get(1).getData().toString());
         String pattern = "*";
         int count = 10;
-        if (kedisDataList.size() > 4) {
+        if (kedisDataList.size() >= 4) {
             pattern = kedisDataList.get(3).getData().toString();
         }
-        if (kedisDataList.size() > 6) {
+        if (kedisDataList.size() >= 6) {
             count = Integer.parseInt(kedisDataList.get(5).getData().toString());
         }
         List<String> list = new ArrayList<>();
