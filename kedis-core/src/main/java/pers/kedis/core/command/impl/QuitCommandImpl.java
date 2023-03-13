@@ -12,6 +12,6 @@ public class QuitCommandImpl extends CommandAbstract {
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         channelDTO.close();
-        return getSuccessKedisData();
+        return getSuccessKedisDataV1();
     }
 }

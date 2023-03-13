@@ -1,30 +1,28 @@
 package pers.kedis.core.command.impl;
 
+import pers.kedis.core.KedisDb;
+import pers.kedis.core.command.Command;
 import pers.kedis.core.command.CommandAbstract;
 import pers.kedis.core.common.utils.KedisUtil;
 import pers.kedis.core.dto.ChannelDTO;
+import pers.kedis.core.dto.DataType;
 import pers.kedis.core.dto.KedisData;
+import pers.kedis.core.dto.KedisKey;
 
 import java.util.List;
 
 /**
  * @author kwsc98
  */
-public class ClientCommandImpl extends CommandAbstract {
-
-    public final String setname = "SETNAME";
+public class ExpireCommandImpl extends CommandAbstract {
 
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> list = getCommandList(channelDTO);
-        String command2 = (String) list.get(1).getData();
-        String clientName = null;
-        if (list.size() >= 3) {
-            clientName = (String) list.get(2).getData();
-        }
-        if (setname.equalsIgnoreCase(command2)) {
-            channelDTO.setClientName(clientName);
-        }
+        String key = list.get(1).getData().toString();
+        Long time = Long.valueOf(list.get(2).getData().toString());
+        KedisKey kedisKey = new KedisKey(key, time);
+        channelDTO.getKedisDb().put(kedisKey, null);
         return getSuccessKedisDataV1();
     }
 

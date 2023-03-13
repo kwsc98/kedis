@@ -1,21 +1,19 @@
-package pers.kedis.core.common.structure;
+package pers.kedis.core.dto;
 
 /**
  * @author kwsc98
  */
-public enum DictType {
+public enum ValueType {
     /**
-     * Key
      * String
      * Hash
      * List
      * Set
-     * SortSet
+     * ZSet
      */
     String,
     Hash,
     List,
     Set,
-    SortSet
-
+    ZSet
 }

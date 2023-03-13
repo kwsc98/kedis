@@ -17,8 +17,9 @@ public class KedisKey {
 
     public KedisKey(String key,Long currentTimeMillis) {
         this.key = key;
-        this.currentTimeMillis = null;
+        this.currentTimeMillis = currentTimeMillis;
     }
+
     public KedisKey(String key) {
         this.key = key;
     }
@@ -41,4 +42,8 @@ public class KedisKey {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return key;
+    }
 }

@@ -18,4 +18,12 @@ public class KedisData {
         this.data = data;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "KedisData{" +
+                "data=" + data +
+                ", dataType=" + dataType +
+                '}';
+    }
 }

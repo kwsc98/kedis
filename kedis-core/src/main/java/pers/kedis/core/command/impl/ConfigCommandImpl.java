@@ -22,10 +22,9 @@ public class ConfigCommandImpl extends CommandAbstract {
 
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
-        KedisData kedisData = channelDTO.getKedisData();
-        List<KedisData> kedisDataList = KedisUtil.convertList(kedisData.getData());
-        String pre1 = kedisDataList.get(1).getData().toString();
-        String pre2 = kedisDataList.get(2).getData().toString();
+        List<KedisData> list = getCommandList(channelDTO);
+        String pre1 = list.get(1).getData().toString();
+        String pre2 = list.get(2).getData().toString();
         if (!get.equalsIgnoreCase(pre1) || !databases.equals(pre2)) {
             throw new KedisException("Error Command");
         }

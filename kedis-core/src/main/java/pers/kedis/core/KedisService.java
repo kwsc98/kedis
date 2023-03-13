@@ -1,7 +1,9 @@
 package pers.kedis.core;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import pers.kedis.core.codec.resp.RespConstants;
 import pers.kedis.core.command.CommandService;
 import pers.kedis.core.common.utils.KedisUtil;
 import pers.kedis.core.dto.KedisData;
@@ -17,20 +19,20 @@ import java.util.*;
  */
 @Slf4j
 public class KedisService {
-
-    private static Map<Integer, KedisDb> KEDIS_DB_MAP;
+    @Getter
+    private static KedisDb[] KEDIS_DB_ARRAY;
 
     public static KedisConfig KEDISCONFIG;
 
     public static void init(int dbCount) {
-        KEDIS_DB_MAP = new HashMap<>();
-        for (int i = 0; i < dbCount; i++) {
-            KEDIS_DB_MAP.put(i, new KedisDb());
+        KEDIS_DB_ARRAY = new KedisDb[dbCount];
+        for (int i = 0; i < KEDIS_DB_ARRAY.length; i++) {
+            KEDIS_DB_ARRAY[i] = new KedisDb();
         }
     }
 
-    public static KedisDb getkedisDb(Integer i) {
-        return KEDIS_DB_MAP.get(i);
+    public static KedisDb getkedisDb(int i) {
+        return KEDIS_DB_ARRAY[i];
     }
 
 
@@ -85,12 +87,12 @@ public class KedisService {
         } else {
             stringBuilder.append(kedisData.getData().toString());
         }
-        log.debug("Command Response : {} ", stringBuilder.toString());
+        log.debug("Command Response : {} ", stringBuilder.toString().replace(new String(RespConstants.CRLF), "||"));
     }
 
 
     public synchronized static void refresh(KedisConfig kedisConfig) {
-        if (Objects.isNull(KEDIS_DB_MAP)) {
+        if (Objects.isNull(KEDIS_DB_ARRAY)) {
             init(kedisConfig.getDbCount());
         }
         KedisService.KEDISCONFIG = kedisConfig;

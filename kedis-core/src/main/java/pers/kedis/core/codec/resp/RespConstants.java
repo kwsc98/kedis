@@ -23,6 +23,8 @@ public class RespConstants {
     public static final Long NEGATIVE_ONE = -1L;
     public static final byte CR = (byte) '\r';
     public static final byte LF = (byte) '\n';
+
+    public static final byte EMPTY_BYTE = (byte) '\0';
     public static final byte[] CRLF = "\r\n".getBytes(ASCII);
 
 

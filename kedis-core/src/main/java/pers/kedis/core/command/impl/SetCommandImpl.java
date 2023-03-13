@@ -1,10 +1,11 @@
 package pers.kedis.core.command.impl;
 
-import pers.kedis.core.KedisDb;
-import pers.kedis.core.common.utils.KedisUtil;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.command.CommandAbstract;
+import pers.kedis.core.dto.KedisKey;
+import pers.kedis.core.dto.KedisValue;
+import pers.kedis.core.dto.ValueType;
 
 import java.util.List;
 
@@ -15,12 +16,11 @@ public class SetCommandImpl extends CommandAbstract {
 
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
-        KedisData kedisData = channelDTO.getKedisData();
-        KedisDb kedisDb = channelDTO.getKedisDb();
-        List<KedisData> kedisDataList = KedisUtil.convertList(kedisData.getData());
+        List<KedisData> kedisDataList = getCommandList(channelDTO);
         String key = (String) kedisDataList.get(1).getData();
         KedisData value = kedisDataList.get(2);
-        return getSuccessKedisData();
+        channelDTO.getKedisDb().put(new KedisKey(key, -1L), new KedisValue<>(ValueType.String, value.getData().toString()));
+        return getSuccessKedisDataV2();
     }
 
 }

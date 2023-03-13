@@ -31,7 +31,5 @@ public class RespBulkStringEncoder implements RespEncoder {
         }
         byteBuf.writeBytes(bytes);
         byteBuf.writeBytes(RespConstants.CRLF);
-        String s = byteBuf.toString(RespConstants.UTF_8);
-        System.out.println();
     }
 }

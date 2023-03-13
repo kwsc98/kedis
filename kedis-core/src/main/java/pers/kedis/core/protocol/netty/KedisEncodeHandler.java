@@ -23,7 +23,6 @@ public class KedisEncodeHandler extends MessageToMessageEncoder<List<KedisData>>
             RespUtil.encode(kedisData, byteBuf);
         }
         out.add(byteBuf);
-        log.debug("sds");
     }
 
 }

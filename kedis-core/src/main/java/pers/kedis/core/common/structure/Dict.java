@@ -3,6 +3,7 @@ package pers.kedis.core.common.structure;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import pers.kedis.core.dto.KedisKey;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -164,7 +165,7 @@ public class Dict<K, V> implements Map<K, V> {
         }
     }
 
-    public int getPatternKey(@NotNull List<K> kedisKeyList, String pattern, int index) {
+    public int getPatternKey(@NotNull List<K> kedisKeyList, Pattern pattern, int index) {
         DictEntry<K, V>[] dictEntries = dicthtArray.get(0).dictEntries;
         int res = getNextIndex(index, dictEntries.length);
         convertKedisKeyList(kedisKeyList, dictEntries[index], pattern);
@@ -198,13 +199,21 @@ public class Dict<K, V> implements Map<K, V> {
     }
 
 
-    private void convertKedisKeyList(List<K> kedisKeyList, DictEntry<K, V> entry, String pattern) {
+    private void convertKedisKeyList(List<K> kedisKeyList, DictEntry<K, V> entry, Pattern pattern) {
         while (entry != null) {
-            if (Pattern.matches(pattern, entry.key.toString())) {
+            if (pattern.matcher(entry.key.toString()).find()) {
                 kedisKeyList.add(entry.key);
             }
             entry = entry.next;
         }
+    }
+
+    public static void main(String[] args) {
+        String str = "*ww*";
+        boolean s = Pattern.compile(str.replace("*", "/*")).matcher("122dd222ww344e1").find();
+        boolean s1 = Pattern.compile(str.replace("*", "/*")).matcher("122dd222ww344e1").find();
+
+        System.out.println();
     }
 
     @Override
@@ -236,7 +245,7 @@ public class Dict<K, V> implements Map<K, V> {
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main1(String[] args) throws InterruptedException {
         Dict dict = new Dict(4);
         int index = 0;
         for (int i = 0; i < 10; i++) {

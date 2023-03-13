@@ -30,6 +30,13 @@ public class CommandService {
         COMMAND_MAP.put(CommandType.CONFIG.name().toUpperCase(), new ConfigCommandImpl());
         COMMAND_MAP.put(CommandType.SCAN.name().toUpperCase(), new ScanCommandImpl());
         COMMAND_MAP.put(CommandType.NSET.name().toUpperCase(), new NsetCommandImpl());
+        COMMAND_MAP.put(CommandType.TYPE.name().toUpperCase(), new TypeCommandlmpl());
+        COMMAND_MAP.put(CommandType.TTL.name().toUpperCase(), new TtlCommandImpl());
+        COMMAND_MAP.put(CommandType.GET.name().toUpperCase(), new GetCommandImpl());
+        COMMAND_MAP.put(CommandType.EXPIRE.name().toUpperCase(), new ExpireCommandImpl());
+        COMMAND_MAP.put(CommandType.SELECT.name().toUpperCase(), new SelectCommandImpl());
+
+
     }
 
     public static KedisData handler(ChannelDTO channelDTO) {

@@ -17,9 +17,6 @@ public class InfoCommandImpl extends CommandAbstract {
 
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
-
-
-
         return new KedisData(DataType.BULK_STRING)
                 .setData(
                         "redis_version:kedis_1.0.0" + new String(RespConstants.CRLF) +

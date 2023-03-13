@@ -9,11 +9,13 @@ import lombok.Getter;
 public class KedisValue<V> {
 
     @Getter
+    private ValueType valueType;
+    @Getter
     private final V value;
 
-    public KedisValue(V value) {
+    public KedisValue(ValueType valueType, V value) {
+        this.valueType = valueType;
         this.value = value;
     }
-
 
 }

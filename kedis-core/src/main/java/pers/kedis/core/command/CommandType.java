@@ -14,7 +14,12 @@ public enum CommandType {
     QUIT,
     INFO,
     CONFIG,
-    SCAN
+    SCAN,
+    TYPE,
+    TTL,
+    GET,
+    EXPIRE,
+    SELECT,
 
 
 }
