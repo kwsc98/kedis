@@ -24,6 +24,10 @@ public abstract class AbstractCommand implements Command {
         return new KedisData(DataType.BULK_STRING).setData("OK");
     }
 
+    protected KedisData getSuccessKedisDataV3() {
+        return new KedisData(DataType.INTEGER).setData(1L);
+    }
+
     protected List<KedisData> getCommandList(ChannelDTO channelDTO) {
         KedisData kedisData = channelDTO.getKedisData();
         return KedisUtil.convertList(kedisData.getData());

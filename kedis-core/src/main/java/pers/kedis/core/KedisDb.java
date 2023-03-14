@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 @JsonIgnoreProperties(value = {"map"})
 public class KedisDb {
-    private final Dict<KedisKey, KedisValue<?>> dictMap = new Dict<>(8);
+    private final Dict<KedisKey, KedisValue> dictMap = new Dict<>(8);
 
     private final int index;
 
@@ -34,23 +34,23 @@ public class KedisDb {
     }
 
 
-    public KedisValue<?> getValue(KedisKey key) {
-        Map.Entry<KedisKey, KedisValue<?>> entry = getEntry(key);
+    public KedisValue getValue(KedisKey key) {
+        Map.Entry<KedisKey, KedisValue> entry = getEntry(key);
         return entry == null ? null : entry.getValue();
     }
 
     public KedisKey getKey(KedisKey key) {
-        Map.Entry<KedisKey, KedisValue<?>> entry = getEntry(key);
+        Map.Entry<KedisKey, KedisValue> entry = getEntry(key);
         return entry == null ? null : entry.getKey();
     }
 
     public boolean containsKey(KedisKey key) {
-        Map.Entry<KedisKey, KedisValue<?>> entry = getEntry(key);
+        Map.Entry<KedisKey, KedisValue> entry = getEntry(key);
         return entry != null;
     }
 
-    public KedisValue<?> put(KedisKey key, KedisValue<?> value) {
-        Map.Entry<KedisKey, KedisValue<?>> entry = getEntry(key);
+    public KedisValue put(KedisKey key, KedisValue value) {
+        Map.Entry<KedisKey, KedisValue> entry = getEntry(key);
         if (entry == null) {
             if (value == null) {
                 throw new KedisException("Put Command Value Is Null");
@@ -61,15 +61,15 @@ public class KedisDb {
             entry.getKey().setCurrentTimeMillis(key.getCurrentTimeMillis());
         }
         if (value != null) {
-            KedisValue<?> res = entry.getValue();
+            KedisValue res = entry.getValue();
             entry.setValue(value);
             return res;
         }
         return null;
     }
 
-    private Map.Entry<KedisKey, KedisValue<?>> getEntry(KedisKey key) {
-        Map.Entry<KedisKey, KedisValue<?>> entry = dictMap.getEntry(key);
+    private Map.Entry<KedisKey, KedisValue> getEntry(KedisKey key) {
+        Map.Entry<KedisKey, KedisValue> entry = dictMap.getEntry(key);
         if (entry == null || entry.getKey().getCurrentTimeMillis() == -1) {
             return entry;
         }

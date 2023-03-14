@@ -8,7 +8,6 @@ public enum CommandType {
      * SET
      */
     SET,
-    NSET,
     CLIENT,
     PING,
     QUIT,
@@ -20,7 +19,9 @@ public enum CommandType {
     GET,
     EXPIRE,
     SELECT,
-    DBSIZE
+    DBSIZE,
+    HSET,
+    HSCAN,
 
 
 }

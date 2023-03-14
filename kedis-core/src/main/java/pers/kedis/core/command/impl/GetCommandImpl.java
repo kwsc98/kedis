@@ -15,7 +15,7 @@ public class GetCommandImpl extends AbstractCommand {
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> list = getCommandList(channelDTO);
         String key = list.get(1).getData().toString();
-        KedisValue<?> value = channelDTO.getKedisDb().getValue(new KedisKey(key));
+        KedisValue value = channelDTO.getKedisDb().getValue(new KedisKey(key));
         String res = null;
         if (Objects.nonNull(value)) {
             res = value.getValue().toString();

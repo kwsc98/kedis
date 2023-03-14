@@ -10,6 +10,12 @@ public class KedisData {
     private Object data;
     DataType dataType;
 
+    @SuppressWarnings("unchecked")
+
+    public <D> D getData() {
+        return (D) data;
+    }
+
     public KedisData(DataType dataType) {
         this.dataType = dataType;
     }

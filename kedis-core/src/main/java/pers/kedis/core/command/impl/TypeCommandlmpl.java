@@ -14,7 +14,7 @@ public class TypeCommandlmpl extends AbstractCommand {
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> list = getCommandList(channelDTO);
         KedisData key = list.get(1);
-        KedisValue<?> kedisValue = channelDTO.getKedisDb().getValue(new KedisKey(key.getData().toString()));
+        KedisValue kedisValue = channelDTO.getKedisDb().getValue(new KedisKey(key.getData().toString()));
         String res = "none";
         if (Objects.nonNull(kedisValue)) {
             res = kedisValue.getValueType().name().toLowerCase();

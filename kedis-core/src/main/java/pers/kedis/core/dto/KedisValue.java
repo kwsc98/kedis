@@ -6,14 +6,17 @@ import lombok.Getter;
 /**
  * @author kwsc98
  */
-public class KedisValue<V> {
+public class KedisValue {
 
     @Getter
     private ValueType valueType;
-    @Getter
-    private final V value;
+    private final Object value;
+    @SuppressWarnings("unchecked")
+    public <V> V getValue() {
+        return (V) value;
+    }
 
-    public KedisValue(ValueType valueType, V value) {
+    public KedisValue(ValueType valueType, Object value) {
         this.valueType = valueType;
         this.value = value;
     }

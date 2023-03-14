@@ -24,8 +24,9 @@ public class KedisKey {
         this.key = key;
     }
 
-    public void setCurrentTimeMillis(Long currentTimeMillis) {
+    public KedisKey setCurrentTimeMillis(Long currentTimeMillis) {
         this.currentTimeMillis = currentTimeMillis;
+        return this;
     }
 
     @Override

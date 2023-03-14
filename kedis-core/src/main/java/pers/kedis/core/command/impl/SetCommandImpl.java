@@ -20,7 +20,7 @@ public class SetCommandImpl extends AbstractUpdateCommand {
         List<KedisData> kedisDataList = getCommandList(channelDTO);
         String key = (String) kedisDataList.get(1).getData();
         KedisData value = kedisDataList.get(2);
-        channelDTO.getKedisDb().put(new KedisKey(key, -1L), new KedisValue<>(ValueType.String, value.getData().toString()));
+        channelDTO.getKedisDb().put(new KedisKey(key, -1L), new KedisValue(ValueType.String, value.getData().toString()));
         return getSuccessKedisDataV2();
     }
 

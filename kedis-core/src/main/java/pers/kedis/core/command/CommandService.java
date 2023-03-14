@@ -36,13 +36,14 @@ public class CommandService {
         COMMAND_MAP.put(CommandType.INFO.name().toUpperCase(), new InfoCommandImpl());
         COMMAND_MAP.put(CommandType.CONFIG.name().toUpperCase(), new ConfigCommandImpl());
         COMMAND_MAP.put(CommandType.SCAN.name().toUpperCase(), new ScanCommandImpl());
-        COMMAND_MAP.put(CommandType.NSET.name().toUpperCase(), new NsetCommandImpl());
         COMMAND_MAP.put(CommandType.TYPE.name().toUpperCase(), new TypeCommandlmpl());
         COMMAND_MAP.put(CommandType.TTL.name().toUpperCase(), new TtlCommandImpl());
         COMMAND_MAP.put(CommandType.GET.name().toUpperCase(), new GetCommandImpl());
         COMMAND_MAP.put(CommandType.EXPIRE.name().toUpperCase(), new ExpireCommandImpl());
         COMMAND_MAP.put(CommandType.SELECT.name().toUpperCase(), new SelectCommandImpl());
         COMMAND_MAP.put(CommandType.DBSIZE.name().toUpperCase(), new DbSizeImplCommand());
+        COMMAND_MAP.put(CommandType.HSET.name().toUpperCase(), new HsetCommandImpl());
+        COMMAND_MAP.put(CommandType.HSCAN.name().toUpperCase(), new HscanCommandImpl());
 
 
     }
