@@ -1,7 +1,6 @@
 package pers.kedis.core.command.impl;
 
-import pers.kedis.core.command.CommandAbstract;
-import pers.kedis.core.common.utils.KedisUtil;
+import pers.kedis.core.command.AbstractCommand;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.KedisData;
 
@@ -10,7 +9,7 @@ import java.util.List;
 /**
  * @author kwsc98
  */
-public class ClientCommandImpl extends CommandAbstract {
+public class ClientCommandImpl extends AbstractCommand {
 
     public final String setname = "SETNAME";
 

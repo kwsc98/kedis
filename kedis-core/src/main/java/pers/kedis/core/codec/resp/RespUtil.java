@@ -9,6 +9,8 @@ import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.dto.DataType;
 import pers.kedis.core.exception.KedisException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -37,8 +39,16 @@ public class RespUtil {
         respEncoder.encode(data, byteBuf);
     }
 
+    public static List<KedisData> decodeAll(ByteBuf msg) {
+        List<KedisData> list = new ArrayList<>();
+        KedisData pre = null;
+        while ((pre = decode(msg)) != null) {
+            list.add(pre);
+        }
+        return list;
+    }
+
     public static KedisData decode(ByteBuf byteBuf) {
-        ;
         if (byteBuf.readableBytes() <= 0) {
             return null;
         }

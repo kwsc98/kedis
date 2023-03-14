@@ -1,8 +1,6 @@
 package pers.kedis.core.command.impl;
 
-import pers.kedis.core.command.Command;
-import pers.kedis.core.command.CommandAbstract;
-import pers.kedis.core.common.utils.KedisUtil;
+import pers.kedis.core.command.AbstractCommand;
 import pers.kedis.core.dto.*;
 
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.Objects;
 /**
  * @author kwsc98
  */
-public class TtlCommandImpl extends CommandAbstract {
+public class TtlCommandImpl extends AbstractCommand {
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> kedisDataList = getCommandList(channelDTO);

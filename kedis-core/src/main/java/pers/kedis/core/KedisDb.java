@@ -18,6 +18,22 @@ import java.util.regex.Pattern;
 public class KedisDb {
     private final Dict<KedisKey, KedisValue<?>> dictMap = new Dict<>(8);
 
+    private final int index;
+
+    public int getIndex() {
+        return index;
+    }
+
+    public KedisDb(int index) {
+        this.index = index;
+    }
+
+
+    public int size() {
+        return dictMap.size();
+    }
+
+
     public KedisValue<?> getValue(KedisKey key) {
         Map.Entry<KedisKey, KedisValue<?>> entry = getEntry(key);
         return entry == null ? null : entry.getValue();

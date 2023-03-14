@@ -14,8 +14,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class KedisProperties {
 
-    private String registeredPath;
+    private String dataResourcesPath;
 
-    private int port = 8080;
+    private int dbCount = 16;
+
+    private int port = 6379;
 
 }

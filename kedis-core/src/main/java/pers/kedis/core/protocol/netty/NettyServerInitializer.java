@@ -14,19 +14,12 @@ import pers.kedis.core.KedisService;
 @Slf4j
 public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
 
-    private final KedisService kedisService;
-
-    public NettyServerInitializer(KedisService kedisService) {
-        this.kedisService = kedisService;
-    }
-
-
     @Override
     protected void initChannel(SocketChannel ch) {
         ChannelPipeline p = ch.pipeline();
         p.addLast(new KedisClientHandler());
         p.addLast(new KedisDecodeHandler());
         p.addLast(new KedisEncodeHandler());
-        p.addLast(new NettyServerHandler(kedisService));
+        p.addLast(new NettyServerHandler());
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author kwsc98
  */
-public abstract class CommandAbstract implements Command {
+public abstract class AbstractCommand implements Command {
 
     protected KedisData getNullKedisData() {
         return new KedisData(DataType.BULK_STRING).setData(null);

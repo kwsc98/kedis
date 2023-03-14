@@ -8,7 +8,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.ResourceUtils;
 import pers.kedis.core.KedisApplicationContext;
+import pers.kedis.core.common.utils.FileUtil;
+
+import java.io.FileNotFoundException;
 
 
 /**
@@ -22,12 +26,13 @@ import pers.kedis.core.KedisApplicationContext;
 @ConditionalOnClass(KedisProperties.class)
 @EnableConfigurationProperties(KedisProperties.class)
 @Slf4j
-@ConditionalOnProperty(name = "kedis.registeredPath", matchIfMissing = false)
+@ConditionalOnProperty(name = "kedis.port", matchIfMissing = false)
 public class AutoConfig {
 
     @Bean(name = "kedisApplicationContext")
     @ConditionalOnMissingBean
-    public KedisApplicationContext init(KedisProperties kedisProperties) {
+    public KedisApplicationContext init(KedisProperties kedisProperties) throws FileNotFoundException {
+        kedisProperties.setDataResourcesPath(ResourceUtils.getFile("classpath:" + kedisProperties.getDataResourcesPath()).getPath());
         log.info("Kedis Start Init");
         return KedisApplicationContext.build().init(kedisProperties);
     }

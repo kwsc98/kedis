@@ -1,8 +1,9 @@
 package pers.kedis.core.command.impl;
 
+import pers.kedis.core.command.AbstractUpdateCommand;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.KedisData;
-import pers.kedis.core.command.CommandAbstract;
+import pers.kedis.core.command.AbstractCommand;
 import pers.kedis.core.dto.KedisKey;
 import pers.kedis.core.dto.KedisValue;
 import pers.kedis.core.dto.ValueType;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * @author kwsc98
  */
-public class SetCommandImpl extends CommandAbstract {
+public class SetCommandImpl extends AbstractUpdateCommand {
 
     @Override
     public KedisData handler(ChannelDTO channelDTO) {

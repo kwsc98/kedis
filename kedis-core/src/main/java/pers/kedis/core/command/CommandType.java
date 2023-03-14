@@ -20,6 +20,7 @@ public enum CommandType {
     GET,
     EXPIRE,
     SELECT,
+    DBSIZE
 
 
 }

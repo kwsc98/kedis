@@ -1,12 +1,18 @@
 package pers.kedis.core.command;
 
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import pers.kedis.core.codec.resp.RespUtil;
 import pers.kedis.core.command.impl.*;
 import pers.kedis.core.common.utils.KedisUtil;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.DataType;
 import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.exception.KedisException;
+import pers.kedis.core.persistence.PersistenService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +22,7 @@ import java.util.Objects;
 /**
  * @author kwsc98
  */
+@Slf4j
 public class CommandService {
 
     private static final Map<String, Command> COMMAND_MAP;
@@ -35,6 +42,7 @@ public class CommandService {
         COMMAND_MAP.put(CommandType.GET.name().toUpperCase(), new GetCommandImpl());
         COMMAND_MAP.put(CommandType.EXPIRE.name().toUpperCase(), new ExpireCommandImpl());
         COMMAND_MAP.put(CommandType.SELECT.name().toUpperCase(), new SelectCommandImpl());
+        COMMAND_MAP.put(CommandType.DBSIZE.name().toUpperCase(), new DbSizeImplCommand());
 
 
     }
@@ -59,6 +67,26 @@ public class CommandService {
         if (Objects.isNull(command)) {
             command = COMMAND_MAP.get(CommandType.PING.name().toUpperCase());
         }
-        return command.handler(channelDTO);
+        KedisData response = null;
+        try {
+            response = command.handler(channelDTO);
+        } catch (Exception e) {
+            log.error("CommandService Error");
+            String info = "Kedis Error";
+            if (e instanceof KedisException) {
+                KedisException exception = (KedisException) e;
+                if (StringUtils.isNotEmpty(exception.getMessage())) {
+                    info = exception.getMessage();
+                }
+            }
+            response = new KedisData(DataType.ERROR).setData(info);
+        }
+        if (DataType.ERROR != response.getDataType() && command instanceof AbstractUpdateCommand) {
+            ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
+            RespUtil.encode(channelDTO.getKedisData(), byteBuf);
+            PersistenService.saveCommand(byteBuf, channelDTO.getKedisDb().getIndex());
+            log.debug("This Command Is Update");
+        }
+        return response;
     }
 }

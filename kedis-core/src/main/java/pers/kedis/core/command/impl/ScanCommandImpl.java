@@ -1,8 +1,6 @@
 package pers.kedis.core.command.impl;
 
-import pers.kedis.core.KedisDb;
-import pers.kedis.core.command.CommandAbstract;
-import pers.kedis.core.common.utils.KedisUtil;
+import pers.kedis.core.command.AbstractCommand;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.DataType;
 import pers.kedis.core.dto.KedisData;
@@ -13,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * @author kwsc98
  */
-public class ScanCommandImpl extends CommandAbstract {
+public class ScanCommandImpl extends AbstractCommand {
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> kedisDataList = getCommandList(channelDTO);

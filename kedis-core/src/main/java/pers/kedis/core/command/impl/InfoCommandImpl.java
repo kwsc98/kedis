@@ -1,19 +1,15 @@
 package pers.kedis.core.command.impl;
 
 import pers.kedis.core.codec.resp.RespConstants;
-import pers.kedis.core.command.CommandAbstract;
+import pers.kedis.core.command.AbstractCommand;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.DataType;
 import pers.kedis.core.dto.KedisData;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author kwsc98
  */
-public class InfoCommandImpl extends CommandAbstract {
+public class InfoCommandImpl extends AbstractCommand {
 
     @Override
     public KedisData handler(ChannelDTO channelDTO) {

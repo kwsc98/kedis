@@ -9,8 +9,10 @@ import pers.kedis.core.common.utils.KedisUtil;
 import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.dto.DataType;
 import pers.kedis.core.dto.ChannelDTO;
-import pers.kedis.core.dto.KedisConfig;
 import pers.kedis.core.exception.KedisException;
+import pers.kedis.core.persistence.AofService;
+import pers.kedis.core.persistence.PersistenInterface;
+import pers.kedis.core.persistence.PersistenService;
 
 import java.util.*;
 
@@ -22,13 +24,18 @@ public class KedisService {
     @Getter
     private static KedisDb[] KEDIS_DB_ARRAY;
 
-    public static KedisConfig KEDISCONFIG;
+    public static KedisProperties KEDISCONFIG;
 
-    public static void init(int dbCount) {
-        KEDIS_DB_ARRAY = new KedisDb[dbCount];
-        for (int i = 0; i < KEDIS_DB_ARRAY.length; i++) {
-            KEDIS_DB_ARRAY[i] = new KedisDb();
+    public static PersistenService persistenService;
+
+    public synchronized static void init(KedisProperties kedisProperties) {
+        KedisService.KEDISCONFIG = kedisProperties;
+        int dbCount = kedisProperties.getDbCount();
+        KedisDb[] kedisDbs = new KedisDb[dbCount];
+        for (int i = 0; i < kedisDbs.length; i++) {
+            kedisDbs[i] = new KedisDb(i);
         }
+        KEDIS_DB_ARRAY = kedisDbs;
     }
 
     public static KedisDb getkedisDb(int i) {
@@ -36,7 +43,7 @@ public class KedisService {
     }
 
 
-    public List<KedisData> handles(ChannelDTO channelDTO) {
+    public static List<KedisData> handles(ChannelDTO channelDTO) {
         List<KedisData> res = new ArrayList<>();
         List<KedisData> kedisDataList = channelDTO.getKedisDataList();
         for (KedisData kedisData : kedisDataList) {
@@ -45,7 +52,7 @@ public class KedisService {
         return res;
     }
 
-    private KedisData handle(ChannelDTO channelDTO) {
+    private static KedisData handle(ChannelDTO channelDTO) {
         printRequestCommand(channelDTO);
         try {
             KedisData kedisData = CommandService.handler(channelDTO);
@@ -65,7 +72,7 @@ public class KedisService {
     }
 
 
-    private void printRequestCommand(ChannelDTO channelDTO) {
+    private static void printRequestCommand(ChannelDTO channelDTO) {
         StringBuilder stringBuilder = new StringBuilder();
         KedisData kedisData = channelDTO.getKedisData();
         if (DataType.RESP_ARRAY == kedisData.getDataType()) {
@@ -77,7 +84,7 @@ public class KedisService {
         log.debug("Recrive Command : {} Channel : {} KedisDb : {}", stringBuilder.toString(), channelDTO.getChannel(), channelDTO.getKedisDb());
     }
 
-    private void printResponeCommand(KedisData kedisData) {
+    private static void printResponeCommand(KedisData kedisData) {
         StringBuilder stringBuilder = new StringBuilder();
         if (DataType.RESP_ARRAY == kedisData.getDataType()) {
             List<KedisData> list = KedisUtil.convertList(kedisData.getData());
@@ -88,14 +95,6 @@ public class KedisService {
             stringBuilder.append(kedisData.getData().toString());
         }
         log.debug("Command Response : {} ", stringBuilder.toString().replace(new String(RespConstants.CRLF), "||"));
-    }
-
-
-    public synchronized static void refresh(KedisConfig kedisConfig) {
-        if (Objects.isNull(KEDIS_DB_ARRAY)) {
-            init(kedisConfig.getDbCount());
-        }
-        KedisService.KEDISCONFIG = kedisConfig;
     }
 
 }

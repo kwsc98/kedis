@@ -1,11 +1,8 @@
 package pers.kedis.core.command.impl;
 
-import pers.kedis.core.KedisDb;
-import pers.kedis.core.command.Command;
-import pers.kedis.core.command.CommandAbstract;
-import pers.kedis.core.common.utils.KedisUtil;
+import pers.kedis.core.command.AbstractCommand;
+import pers.kedis.core.command.AbstractUpdateCommand;
 import pers.kedis.core.dto.ChannelDTO;
-import pers.kedis.core.dto.DataType;
 import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.dto.KedisKey;
 
@@ -14,7 +11,7 @@ import java.util.List;
 /**
  * @author kwsc98
  */
-public class ExpireCommandImpl extends CommandAbstract {
+public class ExpireCommandImpl extends AbstractUpdateCommand {
 
     @Override
     public KedisData handler(ChannelDTO channelDTO) {

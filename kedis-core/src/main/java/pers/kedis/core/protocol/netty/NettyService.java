@@ -27,7 +27,7 @@ public class NettyService {
 
     EventLoopGroup workerGroup;
 
-    public NettyService(int port, KedisService kedisService) {
+    public NettyService(int port) {
         //NioEventLoopGroup是对Thread和Selector的封装
         //主线程
         bossGroup = new NioEventLoopGroup(1);
@@ -40,7 +40,7 @@ public class NettyService {
                     //绑定服务端通道 NioServerSocketChannel
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new NettyServerInitializer(kedisService));
+                    .childHandler(new NettyServerInitializer());
             Channel channel = b.bind(port).sync().channel();
             log.info("server channel start port:{} channel:{}", port, channel);
         } catch (Exception e) {
