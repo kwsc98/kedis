@@ -2,6 +2,8 @@ package pers.kedis.core.dto;
 
 import lombok.Getter;
 
+import java.util.Objects;
+
 /**
  * @author kwsc98
  */
@@ -23,6 +25,20 @@ public class KedisData {
     public KedisData setData(Object data) {
         this.data = data;
         return this;
+    }
+
+    @Override
+    public int hashCode() {
+        return data == null ? 0 : data.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof KedisData) {
+            Object objKey = ((KedisData) obj).data;
+            return Objects.equals(data, objKey);
+        }
+        return false;
     }
 
     @Override

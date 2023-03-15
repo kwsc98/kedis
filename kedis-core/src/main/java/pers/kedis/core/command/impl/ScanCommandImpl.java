@@ -4,6 +4,8 @@ import pers.kedis.core.command.AbstractCommand;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.DataType;
 import pers.kedis.core.dto.KedisData;
+import pers.kedis.core.dto.KedisKey;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -24,14 +26,14 @@ public class ScanCommandImpl extends AbstractCommand {
         if (kedisDataList.size() >= 6) {
             count = Integer.parseInt(kedisDataList.get(5).getData().toString());
         }
-        List<String> list = new ArrayList<>();
         Pattern pattern = Pattern.compile(
-                patternStr.replace("*","/*")
+                patternStr.replace("*", "/*")
         );
+        List<KedisKey> list = new ArrayList<>();
         long indexRes = channelDTO.getKedisDb().getPatternKey(list, pattern, index, count);
         List<KedisData> keyLisy = new ArrayList<>();
-        for (String key : list) {
-            keyLisy.add(new KedisData(DataType.BULK_STRING).setData(key));
+        for (KedisKey kedisKey : list) {
+            keyLisy.add(new KedisData(DataType.BULK_STRING).setData(kedisKey.getKey()));
         }
         List<KedisData> res = new ArrayList<>();
         res.add(new KedisData(DataType.BULK_STRING).setData(String.valueOf(indexRes)));

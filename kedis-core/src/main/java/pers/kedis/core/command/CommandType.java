@@ -22,6 +22,7 @@ public enum CommandType {
     DBSIZE,
     HSET,
     HSCAN,
+    HDEL
 
 
 }

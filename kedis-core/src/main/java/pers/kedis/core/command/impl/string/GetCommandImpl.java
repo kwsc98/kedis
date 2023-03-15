@@ -1,4 +1,4 @@
-package pers.kedis.core.command.impl;
+package pers.kedis.core.command.impl.string;
 
 import pers.kedis.core.command.AbstractCommand;
 import pers.kedis.core.dto.*;
@@ -16,10 +16,13 @@ public class GetCommandImpl extends AbstractCommand {
         List<KedisData> list = getCommandList(channelDTO);
         String key = list.get(1).getData().toString();
         KedisValue value = channelDTO.getKedisDb().getValue(new KedisKey(key));
-        String res = null;
-        if (Objects.nonNull(value)) {
-            res = value.getValue().toString();
+        KedisData kedisData = new KedisData(DataType.BULK_STRING).setData(null);
+        if (Objects.isNull(value)) {
+            return kedisData;
         }
-        return new KedisData(DataType.BULK_STRING).setData(res);
+        if (value.getValueType() != ValueType.String) {
+            return getErrorForKeyType();
+        }
+        return value.getValue();
     }
 }

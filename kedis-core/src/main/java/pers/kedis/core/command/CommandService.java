@@ -7,6 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import pers.kedis.core.codec.resp.RespUtil;
 import pers.kedis.core.command.impl.*;
+import pers.kedis.core.command.impl.hash.HdelCommandImpl;
+import pers.kedis.core.command.impl.hash.HscanCommandImpl;
+import pers.kedis.core.command.impl.hash.HsetCommandImpl;
+import pers.kedis.core.command.impl.string.GetCommandImpl;
+import pers.kedis.core.command.impl.string.SetCommandImpl;
 import pers.kedis.core.common.utils.KedisUtil;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.DataType;
@@ -44,6 +49,7 @@ public class CommandService {
         COMMAND_MAP.put(CommandType.DBSIZE.name().toUpperCase(), new DbSizeImplCommand());
         COMMAND_MAP.put(CommandType.HSET.name().toUpperCase(), new HsetCommandImpl());
         COMMAND_MAP.put(CommandType.HSCAN.name().toUpperCase(), new HscanCommandImpl());
+        COMMAND_MAP.put(CommandType.HDEL.name().toUpperCase(), new HdelCommandImpl());
 
 
     }

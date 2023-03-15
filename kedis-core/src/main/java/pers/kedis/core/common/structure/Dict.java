@@ -165,7 +165,7 @@ public class Dict<K, V> implements Map<K, V> {
         }
     }
 
-    public int getPatternKey(@NotNull List<K> kedisKeyList, Pattern pattern, int index) {
+    public int getPatternKey(@NotNull List<Map.Entry<K, V>> kedisKeyList, Pattern pattern, int index) {
         DictEntry<K, V>[] dictEntries = dicthtArray.get(0).dictEntries;
         int res = getNextIndex(index, dictEntries.length);
         convertKedisKeyList(kedisKeyList, dictEntries[index], pattern);
@@ -199,10 +199,10 @@ public class Dict<K, V> implements Map<K, V> {
     }
 
 
-    private void convertKedisKeyList(List<K> kedisKeyList, DictEntry<K, V> entry, Pattern pattern) {
+    private void convertKedisKeyList(List<Map.Entry<K, V>> kedisKeyList, DictEntry<K, V> entry, Pattern pattern) {
         while (entry != null) {
             if (pattern.matcher(entry.key.toString()).find()) {
-                kedisKeyList.add(entry.key);
+                kedisKeyList.add(entry);
             }
             entry = entry.next;
         }

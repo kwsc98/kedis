@@ -28,6 +28,14 @@ public abstract class AbstractCommand implements Command {
         return new KedisData(DataType.INTEGER).setData(1L);
     }
 
+    protected KedisData getErrorKedisDataV1() {
+        return new KedisData(DataType.INTEGER).setData(0L);
+    }
+
+    protected KedisData getErrorForKeyType() {
+        return new KedisData(DataType.ERROR).setData("WRONGTYPE Operation against a key holding the wrong kind of value");
+    }
+
     protected List<KedisData> getCommandList(ChannelDTO channelDTO) {
         KedisData kedisData = channelDTO.getKedisData();
         return KedisUtil.convertList(kedisData.getData());

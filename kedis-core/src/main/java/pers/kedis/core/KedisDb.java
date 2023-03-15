@@ -39,6 +39,10 @@ public class KedisDb {
         return entry == null ? null : entry.getValue();
     }
 
+    public Map.Entry<KedisKey,KedisValue> getDictEntry(KedisKey key) {
+        return getEntry(key);
+    }
+
     public KedisKey getKey(KedisKey key) {
         Map.Entry<KedisKey, KedisValue> entry = getEntry(key);
         return entry == null ? null : entry.getKey();
@@ -81,18 +85,18 @@ public class KedisDb {
         return entry;
     }
 
-    public int getPatternKey(List<String> list, Pattern pattern, int index, int count) {
+    public int getPatternKey(List<KedisKey> list, Pattern pattern, int index, int count) {
         int res = index;
-        List<KedisKey> tempList = new ArrayList<>();
+        List<Map.Entry<KedisKey, KedisValue>> tempList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             res = dictMap.getPatternKey(tempList, pattern, res);
             if (res == 0) {
                 break;
             }
         }
-        for (KedisKey kedisKey : tempList) {
-            if (getEntry(kedisKey) != null) {
-                list.add(kedisKey.getKey());
+        for (Map.Entry<KedisKey, KedisValue> kedisEntry : tempList) {
+            if (getEntry(kedisEntry.getKey()) != null) {
+                list.add(kedisEntry.getKey());
             }
         }
         return res;
