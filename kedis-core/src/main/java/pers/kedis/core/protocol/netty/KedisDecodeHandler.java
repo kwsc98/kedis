@@ -3,12 +3,13 @@ package pers.kedis.core.protocol.netty;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageDecoder;
+import io.netty.handler.codec.*;
 import lombok.extern.slf4j.Slf4j;
 import pers.kedis.core.codec.resp.RespConstants;
 import pers.kedis.core.codec.resp.RespUtil;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.KedisData;
+import pers.kedis.core.exception.ByteDecodeException;
 import pers.kedis.core.persistence.PersistenService;
 
 import java.util.ArrayList;
@@ -18,12 +19,19 @@ import java.util.List;
  * @author kwsc98
  */
 @Slf4j
-public class KedisDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
+public class KedisDecodeHandler extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) {
         printByteBufInfo(msg);
-        List<KedisData> list = RespUtil.decodeAll(msg);
+        List<KedisData> list = null;
+        msg.markReaderIndex();
+        try {
+            list = RespUtil.decodeAll(msg);
+        } catch (ByteDecodeException e) {
+            msg.resetReaderIndex();
+            return;
+        }
         out.add(list);
     }
 

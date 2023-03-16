@@ -18,7 +18,7 @@ public class RespArrayDecoder extends AbstractRespDecoder {
     public KedisData decode(ByteBuf buffer) {
         KedisData respArray = new KedisData(DataType.RESP_ARRAY);
         KedisData longKedisData = RespUtil.RESP_INTEGER_DECODER.decode(buffer);
-        Long arrayLen = (Long) longKedisData.getData();
+        Long arrayLen = longKedisData.getData();
         if (RespConstants.NEGATIVE_ONE.equals(arrayLen)) {
             return respArray;
         }

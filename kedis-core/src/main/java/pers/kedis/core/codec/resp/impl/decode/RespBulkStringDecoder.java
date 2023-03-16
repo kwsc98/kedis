@@ -16,7 +16,7 @@ public class RespBulkStringDecoder extends AbstractRespDecoder {
     public KedisData decode(ByteBuf buffer) {
         KedisData kedisData = new KedisData(DataType.BULK_STRING);
         KedisData longKedisData = RespUtil.RESP_INTEGER_DECODER.decode(buffer);
-        Long strLen = (Long) longKedisData.getData();
+        Long strLen = longKedisData.getData();
         if (RespConstants.NEGATIVE_ONE.equals(strLen)) {
             return kedisData.setData(RespConstants.NULL_STRING);
         }

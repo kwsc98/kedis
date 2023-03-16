@@ -7,6 +7,7 @@ import pers.kedis.core.codec.resp.impl.decode.*;
 import pers.kedis.core.codec.resp.impl.encode.*;
 import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.dto.DataType;
+import pers.kedis.core.exception.ByteDecodeException;
 import pers.kedis.core.exception.KedisException;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class RespUtil {
         int index = buffer.forEachByte(ByteProcessor.FIND_LF);
         int res = (index > 0 && buffer.getByte(index - 1) == RespConstants.CR) ? index - 1 : -1;
         if (res <= -1) {
-            throw new KedisException();
+            throw new ByteDecodeException();
         }
         return res;
     }

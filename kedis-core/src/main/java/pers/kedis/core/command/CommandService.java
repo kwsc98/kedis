@@ -61,11 +61,11 @@ public class CommandService {
         switch (dataType) {
             case SIMPLE_STRING:
             case BULK_STRING:
-                commandName = (String) kedisData.getData();
+                commandName = kedisData.getData();
                 break;
             case RESP_ARRAY:
                 List<KedisData> list = KedisUtil.convertList(kedisData.getData());
-                commandName = (String) list.get(0).getData();
+                commandName = list.get(0).getData();
                 break;
             default:
                 throw new KedisException();
