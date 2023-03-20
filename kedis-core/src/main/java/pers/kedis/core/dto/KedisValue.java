@@ -10,15 +10,16 @@ public class KedisValue {
 
     @Getter
     private ValueType valueType;
-    private final Object value;
+    private final Object data;
+
     @SuppressWarnings("unchecked")
-    public <V> V getValue() {
-        return (V) value;
+    public <V> V getData() {
+        return (V) data;
     }
 
-    public KedisValue(ValueType valueType, Object value) {
+    public KedisValue(ValueType valueType, Object data) {
         this.valueType = valueType;
-        this.value = value;
+        this.data = data;
     }
 
 }

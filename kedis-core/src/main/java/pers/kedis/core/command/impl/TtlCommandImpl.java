@@ -13,7 +13,7 @@ public class TtlCommandImpl extends AbstractCommand {
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> kedisDataList = getCommandList(channelDTO);
-        String key = kedisDataList.get(1).getData().toString();
+        KedisData key = kedisDataList.get(1);
         KedisKey kedisKey = channelDTO.getKedisDb().getKey(new KedisKey(key));
         long res = -2;
         if (Objects.nonNull(kedisKey)) {

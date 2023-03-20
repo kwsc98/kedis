@@ -53,8 +53,8 @@ public class KedisService {
     }
 
     private static KedisData handle(ChannelDTO channelDTO) {
-        printRequestCommand(channelDTO);
         try {
+            printRequestCommand(channelDTO);
             KedisData kedisData = CommandService.handler(channelDTO);
             printResponeCommand(kedisData);
             return kedisData;
@@ -78,10 +78,10 @@ public class KedisService {
         if (DataType.RESP_ARRAY == kedisData.getDataType()) {
             List<KedisData> list = KedisUtil.convertList(kedisData.getData());
             for (KedisData kedisDataPre : list) {
-                stringBuilder.append(kedisDataPre.getData().toString()).append(" ");
+                stringBuilder.append(kedisDataPre.getData() == null ? "null" : kedisData.getData().toString()).append(" ");
             }
         }
-        log.debug("Recrive Command : {} Channel : {} KedisDb : {}", stringBuilder.toString(), channelDTO.getChannel(), channelDTO.getKedisDb());
+        log.debug("Recrive Command : {} Channel : {} KedisDb : {}", stringBuilder, channelDTO.getChannel(), channelDTO.getKedisDb());
     }
 
     private static void printResponeCommand(KedisData kedisData) {
@@ -92,7 +92,7 @@ public class KedisService {
                 stringBuilder.append(kedisDataPre.getData().toString()).append(" ");
             }
         } else {
-            stringBuilder.append(kedisData.getData().toString());
+            stringBuilder.append(kedisData.getData() == null ? "null" : kedisData.getData().toString());
         }
         log.debug("Command Response : {} ", stringBuilder.toString().replace(new String(RespConstants.CRLF), "||"));
     }

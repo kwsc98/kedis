@@ -10,17 +10,17 @@ import java.util.Objects;
 public class KedisKey {
 
     @Getter
-    private final String key;
+    private final KedisData key;
 
     @Getter
     private Long currentTimeMillis;
 
-    public KedisKey(String key,Long currentTimeMillis) {
+    public KedisKey(KedisData key, Long currentTimeMillis) {
         this.key = key;
         this.currentTimeMillis = currentTimeMillis;
     }
 
-    public KedisKey(String key) {
+    public KedisKey(KedisData key) {
         this.key = key;
     }
 
@@ -37,7 +37,7 @@ public class KedisKey {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof KedisKey) {
-            String objKey = ((KedisKey) obj).key;
+            KedisData objKey = ((KedisKey) obj).key;
             return Objects.equals(key, objKey);
         }
         return false;
@@ -45,6 +45,6 @@ public class KedisKey {
 
     @Override
     public String toString() {
-        return key;
+        return key.getData().toString();
     }
 }

@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import pers.kedis.core.codec.resp.RespUtil;
 import pers.kedis.core.command.impl.*;
 import pers.kedis.core.command.impl.hash.HdelCommandImpl;
+import pers.kedis.core.command.impl.hash.HexistsCommandImpl;
 import pers.kedis.core.command.impl.hash.HscanCommandImpl;
 import pers.kedis.core.command.impl.hash.HsetCommandImpl;
 import pers.kedis.core.command.impl.string.GetCommandImpl;
@@ -50,8 +51,8 @@ public class CommandService {
         COMMAND_MAP.put(CommandType.HSET.name().toUpperCase(), new HsetCommandImpl());
         COMMAND_MAP.put(CommandType.HSCAN.name().toUpperCase(), new HscanCommandImpl());
         COMMAND_MAP.put(CommandType.HDEL.name().toUpperCase(), new HdelCommandImpl());
-
-
+        COMMAND_MAP.put(CommandType.DEL.name().toUpperCase(), new DelCommandImpl());
+        COMMAND_MAP.put(CommandType.HEXISTS.name().toUpperCase(), new HexistsCommandImpl());
     }
 
     public static KedisData handler(ChannelDTO channelDTO) {
@@ -88,7 +89,7 @@ public class CommandService {
             }
             response = new KedisData(DataType.ERROR).setData(info);
         }
-        if (DataType.ERROR != response.getDataType() && command instanceof AbstractUpdateCommand) {
+        if (channelDTO.isUpdate() && DataType.ERROR != response.getDataType() && command instanceof AbstractUpdateCommand) {
             ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
             RespUtil.encode(channelDTO.getKedisData(), byteBuf);
             PersistenService.saveCommand(byteBuf, channelDTO.getKedisDb().getIndex());

@@ -21,7 +21,7 @@ public class SetCommandImpl extends AbstractUpdateCommand {
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> kedisDataList = getCommandList(channelDTO);
-        String key = kedisDataList.get(1).getData();
+        KedisData key = kedisDataList.get(1);
         KedisData value = kedisDataList.get(2);
         KedisDb kedisDb = channelDTO.getKedisDb();
         KedisValue kedisValue = new KedisValue(ValueType.String, value);

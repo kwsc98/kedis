@@ -9,12 +9,13 @@ import pers.kedis.core.exception.KedisException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
  * @author kwsc98
  */
-@JsonIgnoreProperties(value = {"map"})
+@JsonIgnoreProperties(value = {"dictMap"})
 public class KedisDb {
     private final Dict<KedisKey, KedisValue> dictMap = new Dict<>(8);
 
@@ -39,7 +40,7 @@ public class KedisDb {
         return entry == null ? null : entry.getValue();
     }
 
-    public Map.Entry<KedisKey,KedisValue> getDictEntry(KedisKey key) {
+    public Map.Entry<KedisKey, KedisValue> getDictEntry(KedisKey key) {
         return getEntry(key);
     }
 
@@ -70,6 +71,14 @@ public class KedisDb {
             return res;
         }
         return null;
+    }
+
+    public Map.Entry<KedisKey, KedisValue> remove(KedisKey kedisKey) {
+        Map.Entry<KedisKey, KedisValue> entry = getEntry(kedisKey);
+        if (Objects.nonNull(entry)) {
+            dictMap.remove(kedisKey);
+        }
+        return entry;
     }
 
     private Map.Entry<KedisKey, KedisValue> getEntry(KedisKey key) {

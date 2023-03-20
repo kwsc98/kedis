@@ -33,7 +33,7 @@ public class ScanCommandImpl extends AbstractCommand {
         long indexRes = channelDTO.getKedisDb().getPatternKey(list, pattern, index, count);
         List<KedisData> keyLisy = new ArrayList<>();
         for (KedisKey kedisKey : list) {
-            keyLisy.add(new KedisData(DataType.BULK_STRING).setData(kedisKey.getKey()));
+            keyLisy.add(new KedisData(DataType.BULK_STRING).setData(kedisKey.getKey().getData()));
         }
         List<KedisData> res = new ArrayList<>();
         res.add(new KedisData(DataType.BULK_STRING).setData(String.valueOf(indexRes)));

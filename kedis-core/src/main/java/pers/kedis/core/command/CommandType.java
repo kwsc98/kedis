@@ -7,22 +7,8 @@ public enum CommandType {
     /**
      * SET
      */
-    SET,
-    CLIENT,
-    PING,
-    QUIT,
-    INFO,
-    CONFIG,
-    SCAN,
-    TYPE,
-    TTL,
-    GET,
-    EXPIRE,
-    SELECT,
-    DBSIZE,
-    HSET,
-    HSCAN,
-    HDEL
+    SET, CLIENT, PING, QUIT, INFO, CONFIG, SCAN, TYPE, TTL,
+    GET, EXPIRE, SELECT, DBSIZE, HSET, HSCAN, HDEL, DEL, HEXISTS
 
 
 }

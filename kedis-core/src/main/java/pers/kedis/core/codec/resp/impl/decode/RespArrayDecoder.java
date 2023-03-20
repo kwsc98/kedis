@@ -5,6 +5,7 @@ import pers.kedis.core.codec.resp.RespConstants;
 import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.dto.DataType;
 import pers.kedis.core.codec.resp.RespUtil;
+import pers.kedis.core.exception.ByteDecodeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,11 @@ public class RespArrayDecoder extends AbstractRespDecoder {
         }
         List<KedisData> list = new ArrayList<>();
         for (int i = 0; i < arrayLen.intValue(); i++) {
-            list.add(RespUtil.decode(buffer));
+            KedisData kedisData = RespUtil.decode(buffer);
+            if (kedisData == null) {
+                throw new ByteDecodeException();
+            }
+            list.add(kedisData);
         }
         return respArray.setData(list);
     }

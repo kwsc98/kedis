@@ -25,9 +25,22 @@ public class ChannelDTO {
 
     private final Channel channel;
 
+    private final boolean update;
+
     public ChannelDTO(KedisDb kedisDb, Channel channel) {
         this.channel = channel;
+        this.update = true;
         setKedisDb(kedisDb);
+    }
+
+    public ChannelDTO(KedisDb kedisDb, Channel channel, boolean update) {
+        this.channel = channel;
+        this.update = update;
+        setKedisDb(kedisDb);
+    }
+
+    public boolean isUpdate() {
+        return update;
     }
 
     public void setKedisDb(KedisDb kedisDb) {

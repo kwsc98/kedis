@@ -16,7 +16,7 @@ public class ExpireCommandImpl extends AbstractUpdateCommand {
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> list = getCommandList(channelDTO);
-        String key = list.get(1).getData().toString();
+        KedisData key = list.get(1);
         Long time = Long.valueOf(list.get(2).getData().toString());
         KedisKey kedisKey = new KedisKey(key, time);
         channelDTO.getKedisDb().put(kedisKey, null);

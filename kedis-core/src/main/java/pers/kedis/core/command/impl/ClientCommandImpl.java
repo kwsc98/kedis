@@ -16,10 +16,10 @@ public class ClientCommandImpl extends AbstractCommand {
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> list = getCommandList(channelDTO);
-        String command2 = (String) list.get(1).getData();
+        String command2 = list.get(1).getData();
         String clientName = null;
         if (list.size() >= 3) {
-            clientName = (String) list.get(2).getData();
+            clientName = list.get(2).getData();
         }
         if (setname.equalsIgnoreCase(command2)) {
             channelDTO.setClientName(clientName);

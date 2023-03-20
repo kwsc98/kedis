@@ -58,7 +58,7 @@ public class AofService implements PersistenInterface {
                     return;
                 }
                 files[dbIndex] = filePre;
-                ChannelDTO channelDTO = new ChannelDTO(KedisService.getkedisDb(dbIndex), null);
+                ChannelDTO channelDTO = new ChannelDTO(KedisService.getkedisDb(dbIndex), null, false);
                 for (String command : commandList) {
                     ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer();
                     buffer.writeBytes(Hex.decodeHex(command));

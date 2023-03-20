@@ -14,7 +14,7 @@ public class GetCommandImpl extends AbstractCommand {
     @Override
     public KedisData handler(ChannelDTO channelDTO) {
         List<KedisData> list = getCommandList(channelDTO);
-        String key = list.get(1).getData().toString();
+        KedisData key = list.get(1);
         KedisValue value = channelDTO.getKedisDb().getValue(new KedisKey(key));
         KedisData kedisData = new KedisData(DataType.BULK_STRING).setData(null);
         if (Objects.isNull(value)) {
@@ -23,6 +23,6 @@ public class GetCommandImpl extends AbstractCommand {
         if (value.getValueType() != ValueType.String) {
             return getErrorForKeyType();
         }
-        return value.getValue();
+        return value.getData();
     }
 }
