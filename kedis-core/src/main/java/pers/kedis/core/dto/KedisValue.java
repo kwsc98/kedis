@@ -1,6 +1,7 @@
 package pers.kedis.core.dto;
 
 import lombok.Getter;
+import pers.kedis.core.dto.enums.ValueType;
 
 
 /**

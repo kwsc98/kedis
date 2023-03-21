@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import pers.kedis.core.codec.resp.RespConstants;
 import pers.kedis.core.codec.resp.RespUtil;
 import pers.kedis.core.dto.KedisData;
-import pers.kedis.core.dto.DataType;
+import pers.kedis.core.dto.enums.DataType;
 
 /**
  * @author kwsc98

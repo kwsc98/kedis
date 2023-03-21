@@ -5,6 +5,7 @@ import pers.kedis.core.command.AbstractUpdateCommand;
 import pers.kedis.core.command.impl.hash.service.HashHandler;
 import pers.kedis.core.common.structure.Dict;
 import pers.kedis.core.dto.*;
+import pers.kedis.core.dto.enums.ValueType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,22 +39,4 @@ public class HsetCommandImpl extends AbstractUpdateCommand {
         return getSuccessKedisDataV3();
     }
 
-    private void setByList(List<KedisData> list, KedisData field, KedisData value) {
-        boolean isHave = false;
-        for (int i = 0; i < list.size(); i += 2) {
-            if (Objects.equals(field.getData(), list.get(i).getData())) {
-                list.set(i + 1, value);
-                isHave = true;
-                break;
-            }
-        }
-        if (!isHave) {
-            list.add(field);
-            list.add(value);
-        }
-    }
-
-    private void setByDict(Dict<KedisData, KedisData> dict, KedisData field, KedisData value) {
-        dict.put(field, value);
-    }
 }

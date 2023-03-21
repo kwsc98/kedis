@@ -3,7 +3,7 @@ package pers.kedis.core.command;
 import pers.kedis.core.common.utils.KedisUtil;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.dto.KedisData;
-import pers.kedis.core.dto.DataType;
+import pers.kedis.core.dto.enums.DataType;
 
 import java.util.List;
 

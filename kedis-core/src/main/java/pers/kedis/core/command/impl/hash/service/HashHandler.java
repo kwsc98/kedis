@@ -3,8 +3,9 @@ package pers.kedis.core.command.impl.hash.service;
 import pers.kedis.core.common.structure.Dict;
 import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.dto.KedisValue;
-import pers.kedis.core.dto.ValueType;
+import pers.kedis.core.dto.enums.ValueType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -13,6 +14,8 @@ import java.util.regex.Pattern;
  * @author kwsc98
  */
 public class HashHandler {
+
+    private static final Pattern PATTERN = Pattern.compile("/*");
 
     private static final ListHashHandler LIST_HASH_HANDLER = new ListHashHandler();
 
@@ -43,6 +46,16 @@ public class HashHandler {
         } else {
             return DICT_HASH_HANDLER.getValueByPattern(value.getData(), dataList, index, count, pattern);
         }
+    }
+
+    public static List<KedisData> getAllData(KedisValue value) {
+        List<KedisData> res = new ArrayList<>();
+        int index = 0;
+        int count = 32;
+        do {
+            index = getValueByPattern(value, res, index, count, PATTERN);
+        } while (index != 0);
+        return res;
     }
 
 

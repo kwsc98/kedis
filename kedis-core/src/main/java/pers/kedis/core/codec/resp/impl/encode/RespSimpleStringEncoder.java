@@ -4,7 +4,7 @@ import com.alibaba.nacos.shaded.com.google.common.base.Charsets;
 import io.netty.buffer.ByteBuf;
 import pers.kedis.core.codec.resp.*;
 import pers.kedis.core.dto.KedisData;
-import pers.kedis.core.dto.DataType;
+import pers.kedis.core.dto.enums.DataType;
 
 import java.util.Objects;
 

@@ -3,9 +3,9 @@ package pers.kedis.core.command.impl;
 import pers.kedis.core.KedisDb;
 import pers.kedis.core.command.AbstractUpdateCommand;
 import pers.kedis.core.dto.*;
+import pers.kedis.core.dto.enums.DataType;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**

@@ -7,15 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import pers.kedis.core.codec.resp.RespUtil;
 import pers.kedis.core.command.impl.*;
-import pers.kedis.core.command.impl.hash.HdelCommandImpl;
-import pers.kedis.core.command.impl.hash.HexistsCommandImpl;
-import pers.kedis.core.command.impl.hash.HscanCommandImpl;
-import pers.kedis.core.command.impl.hash.HsetCommandImpl;
+import pers.kedis.core.command.impl.hash.*;
 import pers.kedis.core.command.impl.string.GetCommandImpl;
 import pers.kedis.core.command.impl.string.SetCommandImpl;
 import pers.kedis.core.common.utils.KedisUtil;
 import pers.kedis.core.dto.ChannelDTO;
-import pers.kedis.core.dto.DataType;
+import pers.kedis.core.dto.enums.DataType;
 import pers.kedis.core.dto.KedisData;
 import pers.kedis.core.exception.KedisException;
 import pers.kedis.core.persistence.PersistenService;
@@ -53,6 +50,8 @@ public class CommandService {
         COMMAND_MAP.put(CommandType.HDEL.name().toUpperCase(), new HdelCommandImpl());
         COMMAND_MAP.put(CommandType.DEL.name().toUpperCase(), new DelCommandImpl());
         COMMAND_MAP.put(CommandType.HEXISTS.name().toUpperCase(), new HexistsCommandImpl());
+        COMMAND_MAP.put(CommandType.HGET.name().toUpperCase(), new HgetCommandImpl());
+        COMMAND_MAP.put(CommandType.HGETALL.name().toUpperCase(), new HgetAllCommandImpl());
     }
 
     public static KedisData handler(ChannelDTO channelDTO) {

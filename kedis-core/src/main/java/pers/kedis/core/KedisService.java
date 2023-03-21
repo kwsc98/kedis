@@ -7,11 +7,9 @@ import pers.kedis.core.codec.resp.RespConstants;
 import pers.kedis.core.command.CommandService;
 import pers.kedis.core.common.utils.KedisUtil;
 import pers.kedis.core.dto.KedisData;
-import pers.kedis.core.dto.DataType;
+import pers.kedis.core.dto.enums.DataType;
 import pers.kedis.core.dto.ChannelDTO;
 import pers.kedis.core.exception.KedisException;
-import pers.kedis.core.persistence.AofService;
-import pers.kedis.core.persistence.PersistenInterface;
 import pers.kedis.core.persistence.PersistenService;
 
 import java.util.*;

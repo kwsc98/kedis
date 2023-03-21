@@ -6,7 +6,7 @@ import io.netty.util.ByteProcessor;
 import pers.kedis.core.codec.resp.impl.decode.*;
 import pers.kedis.core.codec.resp.impl.encode.*;
 import pers.kedis.core.dto.KedisData;
-import pers.kedis.core.dto.DataType;
+import pers.kedis.core.dto.enums.DataType;
 import pers.kedis.core.exception.ByteDecodeException;
 import pers.kedis.core.exception.KedisException;
 

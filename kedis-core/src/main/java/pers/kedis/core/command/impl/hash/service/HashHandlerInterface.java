@@ -15,8 +15,8 @@ public interface HashHandlerInterface<T> {
 
     KedisData getValueByField(T data, KedisData field);
 
-    int getValueByPattern(T preList, List<KedisData> dataList, int index, int count, Pattern pattern);
+    int getValueByPattern(T data, List<KedisData> dataList, int index, int count, Pattern pattern);
 
-    void setData(T list, KedisData field, KedisData value);
+    void setData(T data, KedisData field, KedisData value);
 
 }

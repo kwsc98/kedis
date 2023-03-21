@@ -1,4 +1,4 @@
-package pers.kedis.core.dto;
+package pers.kedis.core.dto.enums;
 
 /**
  * @author kwsc98

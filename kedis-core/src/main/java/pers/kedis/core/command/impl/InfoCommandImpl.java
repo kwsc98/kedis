@@ -3,7 +3,7 @@ package pers.kedis.core.command.impl;
 import pers.kedis.core.codec.resp.RespConstants;
 import pers.kedis.core.command.AbstractCommand;
 import pers.kedis.core.dto.ChannelDTO;
-import pers.kedis.core.dto.DataType;
+import pers.kedis.core.dto.enums.DataType;
 import pers.kedis.core.dto.KedisData;
 
 /**

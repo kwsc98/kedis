@@ -3,8 +3,9 @@ package pers.kedis.core.command.impl.hash;
 import pers.kedis.core.KedisDb;
 import pers.kedis.core.command.AbstractUpdateCommand;
 import pers.kedis.core.command.impl.hash.service.HashHandler;
-import pers.kedis.core.common.structure.Dict;
 import pers.kedis.core.dto.*;
+import pers.kedis.core.dto.enums.DataType;
+import pers.kedis.core.dto.enums.ValueType;
 
 import java.util.*;
 

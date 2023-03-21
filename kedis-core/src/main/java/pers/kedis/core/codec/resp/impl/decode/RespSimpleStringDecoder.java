@@ -2,7 +2,7 @@ package pers.kedis.core.codec.resp.impl.decode;
 
 import io.netty.buffer.ByteBuf;
 import pers.kedis.core.dto.KedisData;
-import pers.kedis.core.dto.DataType;
+import pers.kedis.core.dto.enums.DataType;
 
 /**
  * @author kwsc98

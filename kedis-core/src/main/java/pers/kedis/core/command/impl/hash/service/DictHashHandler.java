@@ -14,15 +14,10 @@ public class DictHashHandler implements HashHandlerInterface<Dict<KedisData, Ked
     @Override
     public int delByFields(Dict<KedisData, KedisData> dict, Set<KedisData> fieldSet) {
         KedisData kedisData = null;
-        for (KedisData field : fieldSet
-        ) {
+        for (KedisData field : fieldSet) {
             kedisData = dict.remove(field);
         }
-        if (Objects.nonNull(kedisData)) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Objects.nonNull(kedisData) ? 1 : 0;
     }
 
     @Override
